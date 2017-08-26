@@ -1,0 +1,44 @@
+// ==========================================================================//
+//
+// [mixin]
+//
+// @author Koichi Nagaoka
+//
+// ==========================================================================//
+
+//-------------------------------
+// display smartphone
+//-------------------------------
+@define-mixin display_sp
+  @media only screen and (max-width: $breakpoint_sp)
+    @mixin-content
+
+//-------------------------------
+// display custom size.
+//
+// @param width display width
+//-------------------------------
+@define-mixin display_custom $width
+  @media only screen and (max-width: $width)
+    @mixin-content
+
+//-------------------------------
+// specify font-size
+//
+// Output pixel size and rem size.
+//
+// @param size target pixel font size (no unit)
+//-------------------------------
+/* stylelint-disable */
+@define-mixin font_size $size
+  font-size: $(size)px
+  font-size: calc($size / 10)rem
+/* stylelint-enable */
+
+//-------------------------------
+// Output text outside this area.
+//-------------------------------
+@define-mixin notxt
+  overflow: hidden
+  white-space: nowrap
+  text-indent: 120%
