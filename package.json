@@ -3,10 +3,10 @@
   "version": "0.0.1",
   "description": "Template of frontend",
   "author": "kkoudev (Koichi Nagaoka)",
-  "private": true,
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com/kkoudev/frontend-template.git"
+    "url": "https://github.com/kkoudev/frontend-template.git"
   },
   "scripts": {
     "start": "node ./node_scripts/tasks/clean.js && run-p watch:* server",

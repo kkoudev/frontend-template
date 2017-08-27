@@ -111,3 +111,7 @@ yarn run product
 ## Design of css
 
 本プロジェクトにおいてはAtomic Designを採用しています。<br>
+
+## [Changelog](CHANGELOG.md)
+
+## [License](LICENSE)
