@@ -18,7 +18,7 @@ funcs.watchBuilding(
     `postcss "${stylesSrcDirPath}/**/!(_)*.sss"`,
     `-c ${config.scriptsRoot}/postcss.config.js`,
     `-d ${stylesDestDirPath}`,
-    `-b ${stylesSrcDirPath}/${config.pagesDir}`,
+    `-b ${stylesSrcDirPath}/${config.bundlesDir}`,
     '-x css --fix',
   ].join(' '),
   {

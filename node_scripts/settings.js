@@ -13,6 +13,7 @@ const projectRoot         = path.resolve(__dirname, '..');                  // �
 const scriptsRoot         = `${projectRoot}/node_scripts`;                  // スクリプトルート
 const documentDir         = isProduction ? 'build' : '.temp';               // ドキュメントディレクトリ
 const documentRoot        = `${projectRoot}/${documentDir}`;                // ドキュメントルート
+const bundlesDir          = 'bundles';                                      // バンドルファイルディレクトリ
 const pagesDir            = 'pages';                                        // ページディレクトリ名
 const appRoot             = `${projectRoot}/app`;                           // アプリケーションソースルート
 const scriptsDir          = 'scripts';                                      // スクリプト格納ディレクトリ名
@@ -69,6 +70,7 @@ module.exports = {
   scriptsRoot,
   documentDir,
   documentRoot,
+  bundlesDir,
   pagesDir,
   appRoot,
   scriptsDir,
