@@ -40,13 +40,13 @@
     "jquery-datetimepicker": "^2.5.4",
     "lodash.assign": "^4.2.0",
     "moment": "^2.18.1",
-    "vue": "^2.4.4",
-    "vuex": "^2.4.1",
+    "vue": "^2.5.2",
+    "vuex": "^3.0.0",
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
-    "autoprefixer": "^7.1.4",
-    "avoriaz": "^4.2.0",
+    "autoprefixer": "^7.1.5",
+    "avoriaz": "^6.0.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
@@ -88,9 +88,11 @@
     "postcss-functions": "^3.0.0",
     "postcss-nested-props": "^1.1.7",
     "postcss-reporter": "^5.0.0",
+    "postcss-selector-parser": "^2.2.3",
     "postcss-sorting": "^3.0.2",
     "postcss-sprites": "^4.2.1",
     "postcss-style-guide": "^0.14.0",
+    "postcss-webfont": "^1.0.1",
     "precss": "^2.0.0",
     "pug": "^2.0.0-rc.4",
     "pug-cli": "^1.0.0-alpha6",
@@ -98,7 +100,8 @@
     "stylelint-config-sugarss-recommended": "^1.0.1",
     "sugarss": "^1.0.0",
     "unquote": "^1.1.0",
-    "vue-template-compiler": "^2.4.4",
-    "vue-template-es2015-compiler": "^1.5.3"
+    "vue-hot-reload-api": "^2.2.0",
+    "vue-template-compiler": "^2.5.2",
+    "vue-template-es2015-compiler": "^1.6.0"
   }
 }

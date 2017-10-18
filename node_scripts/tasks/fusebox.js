@@ -16,8 +16,26 @@ const fsbx    = require('fuse-box');
  */
 const buildProcess = () => {
 
+  const babelPlugin = fsbx.BabelPlugin({
+    config: {
+      sourceMaps: !config.isProduction,
+      presets: [
+        [
+          'env',
+          {
+            targets: {
+              browsers: config.browsers
+            }
+          }
+        ]
+      ],
+      plugins: [],
+    },
+  });
+
   // FuseBoxの初期設定
   const fuse = fsbx.FuseBox.init({
+    useTypescriptCompiler: false,
     homeDir: `${config.projectRoot}`,
     output: `${config.documentRoot}/${config.scriptsDir}/$name.js`,
     sourceMaps: !config.isProduction,
@@ -27,28 +45,9 @@ const buildProcess = () => {
       fsbx.EnvPlugin({
         NODE_ENV: process.env.NODE_ENV
       }),
-      fsbx.BabelPlugin({
-        config: {
-          sourceMaps: !config.isProduction,
-          presets: [
-            [
-              'env',
-              {
-                targets: {
-                  browsers: config.browsers
-                }
-              }
-            ]
-          ],
-          plugins: [],
-        },
-      }),
-      fsbx.VuePlugin({
-        babel: {
-          config: {
-            plugins: ['transform-es2015-modules-commonjs']
-          }
-        }
+      babelPlugin,
+      fsbx.VueComponentPlugin({
+        script: babelPlugin
       }),
       config.isProduction && fsbx.UglifyJSPlugin(),
     ]
