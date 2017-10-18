@@ -99,6 +99,7 @@
     "stylelint": "^8.1.1",
     "stylelint-config-sugarss-recommended": "^1.0.1",
     "sugarss": "^1.0.0",
+    "typescript": "^2.5.3",
     "unquote": "^1.1.0",
     "vue-hot-reload-api": "^2.2.0",
     "vue-template-compiler": "^2.5.2",
