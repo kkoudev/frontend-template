@@ -6,16 +6,83 @@
 
 const funcs   = require('../utils/functions');
 const config  = require('../settings');
+const fs      = require('fs-extra');
+const glob    = require('glob');
+const path    = require('path');
+const pug     = require('pug');
 
+
+/**
+ * build pug files.
+ *
+ * @param {string} file add or change file path
+ */
+const buildProcessing = (file) => {
+
+  const viewsRootDirPath = `${config.appRoot}/${config.viewsRootDir}`;
+
+  return new Promise((resolve, reject) => {
+
+    const executeCompilePromises = [];
+    const targetFiles            = file ? [file] : glob.sync(`${viewsRootDirPath}/**/*.pug`);
+
+    // empty files?
+    if (targetFiles.length === 0) {
+
+      // returns successful
+      resolve();
+      return;
+
+    }
+
+    // for each target files
+    targetFiles.forEach((targetFile) => {
+
+      // creates promise for compiling pug file
+      executeCompilePromises.push(new Promise((compileResolve, compileReject) => {
+
+        const workFilePath    = `${targetFile.substring(viewsRootDirPath.length + 1)}`;
+        const targetDirPath   = path.dirname(`${config.documentRoot}/${workFilePath}`);
+        const targetFileExt   = path.extname(workFilePath);
+        const targetFilePath  = path.basename(workFilePath, targetFileExt);
+        const func            = pug.compileFile(targetFile, config.pugOptions);
+
+        // creates parent directories
+        fs.mkdirs(targetDirPath).then(() => {
+
+          // creates write stream
+          const writeStream = fs.createWriteStream(
+            `${targetDirPath}/${targetFilePath}.html`,
+            {
+              encoding: 'UTF-8'
+            }
+          );
+
+          // define stream events
+          writeStream.on('finish', () => compileResolve())
+            .on('error', (error) => compileReject(error));
+
+          // write html string
+          writeStream.write(func(config.pugOptions.locals));
+          writeStream.end();
+
+        });
+
+      }));
+
+    });
+
+    // Execute all compiling pug files
+    Promise.all(executeCompilePromises)
+      .then(() => resolve())
+      .catch((error) => reject(error));
+
+  });
+
+};
 
 // ビルド監視処理を開始する
 funcs.watchBuilding(
   `${config.appRoot}/${config.viewsDir}`,
-  [
-    `pug ${config.appRoot}/${config.viewsRootDir}/ -o ${config.documentRoot}`,
-    `-P -O '${JSON.stringify(config.pugVariables)}'`
-  ].join(' '),
-  {
-    noError: true
-  }
+  buildProcessing
 );

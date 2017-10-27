@@ -1,5 +1,5 @@
 /**
- * @file 設定ファイル情報
+ * @file build settings.
  *
  * @author Koichi Nagaoka
  */
@@ -22,6 +22,7 @@ const scriptsBundlesPath  = `${appRoot}/${scriptsBundlesDir}`;              // �
 const scriptsExt          = 'js';                                           // スクリプト拡張子
 const scriptsBundleName   = 'vendor';                                       // スクリプトライブラリバンドルファイル名
 const stylesDir           = 'styles';                                       // スタイル格納ディレクトリ名
+const stylesExt           = 'sss';                                          // スタイル拡張子
 const viewsDir            = 'views';                                        // ビュー格納ディレクトリ名
 const viewsRootDir        = `${viewsDir}/root`;                             // ビュールート格納ディレクトリ名
 const imagesDir           = 'images';                                       // 画像格納ディレクトリ名
@@ -45,20 +46,25 @@ const browsers            = [
   'Android >= 4',
 ];
 
-// pugの変数情報
-const pugVariables        = {
+// pugの設定情報
+const pugOptions          = {
 
-  env: {
-    isProduction,
-    time: moment().format('YYYYMMDDhhmm'),
-    dnsPrefetches: [
-      isProduction ? 'example.com' : 'localhost', // TODO : プロジェクトによってここは修正すること
-      'fonts.googleapis.com'
-    ],
-    preconnects: [
-      isProduction ? 'https://example.com' : 'http://localhost',  // TODO : プロジェクトによってここは修正すること
-      'https://fonts.googleapis.com'
-    ]
+  pretty: true,
+  locals: {
+
+    env: {
+      isProduction,
+      time: moment().format('YYYYMMDDhhmm'),
+      dnsPrefetches: [
+        isProduction ? 'example.com' : 'localhost', // TODO : プロジェクトによってここは修正すること
+        'fonts.googleapis.com'
+      ],
+      preconnects: [
+        isProduction ? 'https://example.com' : 'http://localhost',  // TODO : プロジェクトによってここは修正すること
+        'https://fonts.googleapis.com'
+      ]
+    }
+
   }
 
 };
@@ -79,6 +85,7 @@ module.exports = {
   scriptsExt,
   scriptsBundleName,
   stylesDir,
+  stylesExt,
   viewsDir,
   viewsRootDir,
   imagesDir,
@@ -86,5 +93,5 @@ module.exports = {
   spritesPadding,
   imagesExts,
   browsers,
-  pugVariables,
+  pugOptions,
 };

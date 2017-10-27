@@ -10,7 +10,8 @@ const childProcess  = require('child_process');
 const chalk         = require('chalk');
 const notifier      = require('node-notifier');
 const moment        = require('moment');
-const log           = console.log;  // eslint-disable-line no-console
+const log           = console.log;    // eslint-disable-line no-console
+const logError      = console.error;  // eslint-disable-line no-console
 
 // コマンド実行で利用する環境変数を定義する
 const usingEnv = Object.assign({}, process.env, {
@@ -56,9 +57,9 @@ exports.exec = (command, options, callback) => {
 
       }
 
-      (!options || !options.noError && error) && log(error);
+      (!options || !options.noError && error) && logError(error);
       (!options || !options.noStdout && stdout) && log(stdout);
-      (!options || !options.noStderr && stderr) && log(stderr);
+      (!options || !options.noStderr && stderr) && logError(stderr);
       callback && callback();
 
     });
@@ -156,12 +157,18 @@ exports.watchBuilding = (watchTarget, buildCommand, options) => {
 
   if (typeof buildCommand === 'function') {
 
-    const executeWrapper = () => {
+    const executeWrapper = (file) => {
 
       const beginContext = exports.consoleBegin();
 
       // ビルド処理を実行する
-      buildCommand(options).then(() => {
+      buildCommand(file, options).then(() => {
+
+        exports.consoleFinish(beginContext);
+
+      }).catch((error) => {
+
+        (!options || !options.noError && error) && logError(error);
 
         exports.consoleFinish(beginContext);
 
