@@ -129,6 +129,12 @@ const BASE_PLUGINS = [
     stylesheetPath: imageDirPath,
     spritePath: imageDirPath,
     retina: true,
+    filterBy(image) {
+
+      return new RegExp(`${config.imagesDir}\/${config.spritesDir}`).test(
+        image.url) ? Promise.resolve() : Promise.reject();
+
+    },
     spritesmith: {
       padding: config.spritesPadding
     },
