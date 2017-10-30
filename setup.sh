@@ -114,6 +114,7 @@ if [[ $? -ne 0 ]]; then
 fi
 
 # nodebrewの有無をチェックする
+# (nodeberw はバージョンアップを強制するために常にインストールさせる)
 which nodebrew > /dev/null 2>&1
 if [[ $? -ne 0 ]]; then
 

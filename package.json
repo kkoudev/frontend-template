@@ -79,7 +79,6 @@
     "nodemon": "^1.12.1",
     "normalize.css": "^7.0.0",
     "npm-run-all": "^4.1.1",
-    "path": "^0.12.7",
     "postcss": "^6.0.12",
     "postcss-assets": "^5.0.0",
     "postcss-calc": "^6.0.0",

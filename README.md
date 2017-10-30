@@ -97,6 +97,76 @@ yarn run product
 }
 ```
 
+## Creates icon font files
+
+アイコンフォントの作成は `app/styles/_iconfonts.sss` ファイルに以下の例のように `@font-face` 指定を記述するだけで利用可能です。<br>
+`@font-face` の `src` プロパティに指定されたディレクトリ内のSVGファイルからアイコンフォントファイルを自動生成します。<br>
+作成されるルールセットは以下の規則で命名されます。<br>
+
+```
+iconfont-(@font-faceで指定されたfont-family名)-(拡張子を除いたSVGファイル名)
+```
+
+上書きするスタイルについては `@font-face` のルールセットの後に記述してください。<br>
+(以下の例では、`add.svg`、`anchor_link.svg`、`apartment.svg` ファイルがiconfontsディレクトリに格納されている場合になります)<br>
+
+＜SugarSSコンパイル前＞
+```sass
+@font-face
+  font-family: 'example'
+  src: url('../../iconfonts/*.svg')
+  font-weight: normal
+  font-style: normal
+
+[class^='iconfont-example-'], [class*=' iconfont-example-']
+  font-family: inherit
+
+[class^='iconfont-example-']::before, [class*=' iconfont-example-']::before
+  font-family: 'example'
+  vertical-align: middle
+```
+
+＜SugarSSコンパイル後＞
+```css
+@font-face {
+  font-family: 'example';
+  src: url('../fonts/example.eot?15f306853f8');
+  src: url('../fonts/example.eot?15f306853f8#iefix') format('embedded-opentype'), url('../fonts/example.woff?15f306853f8') format('woff'), url('../fonts/example.ttf?15f306853f8') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+[class^='iconfont-example-'], [class*=' iconfont-example-'] {
+  font-family: 'example';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.iconfont-example-add::before {
+  content: '\EA01';
+}
+.iconfont-example-anchor_link::before {
+  content: '\EA02';
+}
+.iconfont-example-apartment::before {
+  content: '\EA03';
+}
+
+[class^='iconfont-example-'], [class*=' iconfont-example-'] {
+  font-family: inherit;
+}
+
+[class^='iconfont-example-']::before, [class*=' iconfont-example-']::before {
+  font-family: 'example';
+  vertical-align: middle;
+}
+```
+
+あとは、アイコンフォントを利用する要素に生成された `iconfont-example-XXX` の名称のルールセットをクラス属性に指定するだけで適用できます。
+
 ## Creates styleguide
 
 スタイルガイドは `postcss-style-guide` にて作成しており、<br>

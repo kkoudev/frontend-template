@@ -12,6 +12,7 @@ const sorting       = require('postcss-sorting');
 const easyImport    = require('postcss-easy-import');
 const functions     = require('postcss-functions');
 const calc          = require('postcss-calc');
+const webfont       = require('postcss-webfont');
 const reporter      = require('postcss-reporter');
 const assets        = require('postcss-assets');
 const sprites       = require('postcss-sprites');
@@ -101,11 +102,16 @@ const BASE_PLUGINS = [
   stylelint(),
   precss(),
   nestedProps(),
+  functions({
+    glob: path.resolve(__dirname, 'postcss/functions', '*.js')
+  }),
   calc({
     mediaQueries: true,
   }),
-  functions({
-    glob: path.resolve(__dirname, 'postcss/functions', '*.js')
+  webfont({
+    publishPath: config.documentRoot,
+    stylesheetPath: './styles',
+    outputPath: `${config.documentRoot}/fonts`,
   }),
   sorting(),
   autoprefixer({
