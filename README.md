@@ -75,7 +75,10 @@ yarn run product
 ## Creates sprite image file
 
 スプライト画像生成は特別なコマンドを実行する必要はなく、<br>
-**`app/images/_sprites/` ディレクトリ配下の画像を `background-image` で指定するだけ** で自動的に作成されます。
+**`app/images/_sprites/` ディレクトリ配下の画像を `background-image` で指定するだけ** で自動的に作成されます。<br>
+また、Retina表示させたい画像の場合は、必ずファイル名の末尾に `@2x` をつけてください。<br>
+(例 : search@2x.png といったファイル名にする)<br>
+逆に、Retina表示させたくない場合は `@2x` をつけないファイル名としてください。<br>
 
 ＜例＞
 
