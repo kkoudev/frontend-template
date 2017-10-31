@@ -1,8 +1,8 @@
-# Envrionment frontend-template.
+# Envrionment frontend-template
 
 This template is frontend project template.
 
-## Directory structures.
+## Directory structures
 
 ### Root directory
 
@@ -28,7 +28,7 @@ This template is frontend project template.
 app
 ├── images                # 画像格納ディレクトリ
 ├── materials             # その他ファイル格納ディレクトリ
-├── scripts               # TypeScriptファイル(*.ts)格納ディレクトリ
+├── scripts               # JavsScriptファイル(*.js)格納ディレクトリ
 ├── styles                # SugarSSファイル(*.sss)格納ディレクトリ
 └── views                 # Pugファイル(*.pug)格納ディレクトリ
 ```
