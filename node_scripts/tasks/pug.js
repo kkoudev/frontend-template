@@ -11,6 +11,10 @@ const glob    = require('glob');
 const path    = require('path');
 const pug     = require('pug');
 
+const viewsRootDirPath = `${config.appRoot}/${config.viewsRootDir}`;
+
+// target files
+const watchTargetFiles = glob.sync(`${viewsRootDirPath}/**/!(_)*.pug`);
 
 /**
  * build pug files.
@@ -19,12 +23,10 @@ const pug     = require('pug');
  */
 const buildProcessing = (file) => {
 
-  const viewsRootDirPath = `${config.appRoot}/${config.viewsRootDir}`;
-
   return new Promise((resolve, reject) => {
 
     const executeCompilePromises = [];
-    const targetFiles            = file ? [file] : glob.sync(`${viewsRootDirPath}/**/*.pug`);
+    const targetFiles            = !file || watchTargetFiles.indexOf(file) === -1 ? watchTargetFiles : [file];
 
     // empty files?
     if (targetFiles.length === 0) {
