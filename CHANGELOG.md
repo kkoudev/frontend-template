@@ -1,3 +1,9 @@
+# 0.1.1  (2018-03-02)
+
+### Changed
+
+-   Upgrade version of postcss-webfont.
+
 # 0.1.0  (2018-03-02)
 
 ### Added
