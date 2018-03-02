@@ -9,4 +9,5 @@
 # https://stylelint.io/user-guide/rules/
 #===========================================
 extends: "stylelint-config-sugarss-recommended"
-
+ignoreFiles:
+  - "./node_modules/**/*"

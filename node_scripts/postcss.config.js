@@ -10,6 +10,7 @@ const postcss       = require('postcss');
 const nestedProps   = require('postcss-nested-props');
 const sorting       = require('postcss-sorting');
 const easyImport    = require('postcss-easy-import');
+const mixins        = require('postcss-mixins');
 const functions     = require('postcss-functions');
 const calc          = require('postcss-calc');
 const webfont       = require('postcss-webfont');
@@ -97,9 +98,15 @@ const imageDirPath = `${config.appRoot}/${config.imagesDir}`;
 // ベースプラグイン設定情報
 const BASE_PLUGINS = [
   easyImport({
-    extensions: ['.sss']
+    extensions: ['.sss'],
+    plugins: [
+      stylelint({
+        configBasedir: config.projectRoot,
+        configFile: '.stylelintrc.yml'
+      })
+    ]
   }),
-  stylelint(),
+  mixins(),
   precss(),
   nestedProps(),
   functions({
