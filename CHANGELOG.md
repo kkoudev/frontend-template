@@ -2,7 +2,7 @@
 
 ### Changed
 
--   Upgrade version of postcss-webfont.
+-   Upgrade versions of all dependences.
 
 # 0.1.0  (2018-03-02)
 
