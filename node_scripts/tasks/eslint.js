@@ -1,17 +1,17 @@
 /**
- * @file ESLint関連設定ファイル。
+ * @file Build settings of ESLint.
  *
  * @author Koichi Nagaoka
  */
 
-const funcs   = require('../utils/functions');
-const config  = require('../settings');
+const funcs     = require('../utils/functions');
+const settings  = require('../../config/settings');
 
 
-// ビルド監視処理を開始する
+// Watch building
 funcs.watchBuilding(
-  `${config.appRoot}/${config.scriptsDir}`,
-  `esw --fix "${config.appRoot}/${config.scriptsDir}/**/*.${config.scriptsExt}"`,
+  `${settings.appRoot}/${settings.scriptsDir}`,
+  `esw --fix "${settings.appRoot}/${settings.scriptsDir}/**/*.${settings.scriptsExt}"`,
   {
     noError: true
   }

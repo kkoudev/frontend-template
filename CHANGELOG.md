@@ -1,3 +1,13 @@
+# 0.2.0  (2018-03-05)
+
+### Added
+
+-   Added backend-server (Express). Set "useBackendServer" variable "false" in config/settings.js when backend server want to be disabled.
+
+### Changed
+
+-   Moved "node_scripts/settings.js" to "config/settings.js".
+
 # 0.1.1  (2018-03-02)
 
 ### Changed
@@ -8,11 +18,11 @@
 
 ### Added
 
--   Add sanitize.css.
+-   Added sanitize.css.
 
 ### Removed
 
--   Remove normalize.css.
+-   Removed normalize.css.
 
 ### Changed
 

@@ -1,5 +1,5 @@
 /**
- * @file 画像圧縮関連設定ファイル。
+ * @file Build settings of images.
  *
  * @author Koichi Nagaoka
  */
@@ -14,19 +14,19 @@ const svgo      = require('imagemin-svgo');
 const gifsicle  = require('imagemin-gifsicle');
 
 const funcs     = require('../utils/functions');
-const config    = require('../settings');
+const settings  = require('../../config/settings');
 
 
 // ビルド監視処理を開始する
 funcs.watchBuilding(
-  `${config.appRoot}/${config.imagesDir}`,
+  `${settings.appRoot}/${settings.imagesDir}`,
   () => {
 
     // 対象画像ファイルパス一覧を取得する
     const imagePaths = glob.sync(
-      `${config.appRoot}/${config.imagesDir}/**/*.{${config.imagesExts.join(',')}}`,
+      `${settings.appRoot}/${settings.imagesDir}/**/*.{${settings.imagesExts.join(',')}}`,
       {
-        ignore: `${config.appRoot}/${config.imagesDir}/${config.spritesDir}/**/*`
+        ignore: `${settings.appRoot}/${settings.imagesDir}/${settings.spritesDir}/**/*`
       }
     );
 
@@ -37,7 +37,7 @@ funcs.watchBuilding(
       imagePaths,
       undefined,    // eslint-disable-line no-undefined
       {
-        plugins: config.isProduction ? [
+        plugins: settings.isProduction ? [
           pngquant({
             speed: 1,
             nofs: false,
@@ -66,8 +66,8 @@ funcs.watchBuilding(
 
         // 出力先ファイルパスを作成する
         const destImageFilePath = path.resolve(
-          config.documentRoot,
-          path.relative(config.appRoot, imagePaths[index])
+          settings.documentRoot,
+          path.relative(settings.appRoot, imagePaths[index])
         );
 
         // ファイルを書き込む

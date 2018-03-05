@@ -1,43 +1,54 @@
 /**
- * @file サーバ設定ファイル。
+ * @file The frontend server settings.
  *
  * @author Koichi Nagaoka
  */
 
 const browserSync = require('browser-sync');
-const config      = require('../settings');
+const settings    = require('../../config/settings');
 
-// サーバを起動する
-browserSync({
+// BrowserSync settings.
+const browserSyncSettings = {
 
-  // サーバ情報
-  server: {
-
-    // ドキュメントルート
-    baseDir: [
-      `${config.documentRoot}`,
-    ],
-
-  },
-
-  // 監視対象ファイル
+  // Watch target files.
   files: [
-    `${config.documentRoot}/**/*.css`,
-    `${config.documentRoot}/**/*.js`,
-    `${config.documentRoot}/**/*.{${config.imagesExts.join(',')}}`,
-    `${config.documentRoot}/**/*.html`,
+    `${settings.documentRoot}`,
   ],
 
-  // デフォルト起動時の使用ポート番号
-  port: 8000,
+  // Default launch port number
+  port: settings.frontendServerPort,
 
-  // HTTPSサポート可否
+  // Support https
   https: false,
 
-  // 通知表示をオフにする
+  // Notify browser-sync
   notify: false,
 
-  // 自動でブラウザを開かない
+  // Auto open browser
   open: false,
 
-});
+};
+
+// Use backend server?
+if (settings.useBackendServer) {
+
+  // append proxy settings.
+  browserSyncSettings.proxy = `localhost:${settings.backendServerPort}`;
+
+} else {
+
+  // append server settings.
+  browserSyncSettings.server = {
+
+    // Document root directories.
+    baseDir: [
+      `${settings.documentRoot}`,
+    ]
+
+  };
+
+}
+
+
+// Launch browser-sync
+browserSync(browserSyncSettings);

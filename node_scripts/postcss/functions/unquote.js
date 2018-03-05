@@ -1,14 +1,14 @@
 /**
- * @file unquote関数
+ * @file unquote function.
  */
 
 const unquote = require('unquote');
 
 /**
- * クォート文字を削除する
+ * Remove quote characters.
  *
- * @param {string} str 対象文字列
- * @return {string} 変換後の文字列
+ * @param {string} str target string
+ * @return {string} converted string
  */
 module.exports = (str) => {
 

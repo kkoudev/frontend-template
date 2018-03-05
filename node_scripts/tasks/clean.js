@@ -1,11 +1,11 @@
 /**
- * @file ドキュメントルートファイル削除。
+ * @file Clean document root directory.
  *
  * @author Koichi Nagaoka
  */
 
-const fs      = require('fs-extra');
-const config  = require('../settings');
+const fs        = require('fs-extra');
+const settings  = require('../../config/settings');
 
 // Removes document root dir.
-fs.removeSync(config.documentRoot);
+fs.removeSync(settings.documentRoot);

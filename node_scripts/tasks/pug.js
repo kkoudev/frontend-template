@@ -1,17 +1,17 @@
 /**
- * @file pug関連設定ファイル。
+ * @file Build settings of pug.
  *
  * @author Koichi Nagaoka
  */
 
-const funcs   = require('../utils/functions');
-const config  = require('../settings');
-const fs      = require('fs-extra');
-const glob    = require('glob');
-const path    = require('path');
-const pug     = require('pug');
+const funcs     = require('../utils/functions');
+const settings  = require('../../config/settings');
+const fs        = require('fs-extra');
+const glob      = require('glob');
+const path      = require('path');
+const pug       = require('pug');
 
-const viewsRootDirPath = `${config.appRoot}/${config.viewsRootDir}`;
+const viewsRootDirPath = `${settings.appRoot}/${settings.viewsRootDir}`;
 
 // target files
 const watchTargetFiles = glob.sync(`${viewsRootDirPath}/**/!(_)*.pug`);
@@ -44,10 +44,10 @@ const buildProcessing = (file) => {
       executeCompilePromises.push(new Promise((compileResolve, compileReject) => {
 
         const workFilePath    = `${targetFile.substring(viewsRootDirPath.length + 1)}`;
-        const targetDirPath   = path.dirname(`${config.documentRoot}/${workFilePath}`);
+        const targetDirPath   = path.dirname(`${settings.documentRoot}/${workFilePath}`);
         const targetFileExt   = path.extname(workFilePath);
         const targetFilePath  = path.basename(workFilePath, targetFileExt);
-        const func            = pug.compileFile(targetFile, config.pugOptions);
+        const func            = pug.compileFile(targetFile, settings.pugOptions);
 
         // creates parent directories
         fs.mkdirs(targetDirPath).then(() => {
@@ -65,7 +65,7 @@ const buildProcessing = (file) => {
             .on('error', (error) => compileReject(error));
 
           // write html string
-          writeStream.write(func(config.pugOptions.locals));
+          writeStream.write(func(settings.pugOptions.locals));
           writeStream.end();
 
         });
@@ -83,8 +83,8 @@ const buildProcessing = (file) => {
 
 };
 
-// ビルド監視処理を開始する
+// Watch building.
 funcs.watchBuilding(
-  `${config.appRoot}/${config.viewsDir}`,
+  `${settings.appRoot}/${settings.viewsDir}`,
   buildProcessing
 );

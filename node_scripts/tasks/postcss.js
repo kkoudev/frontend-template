@@ -1,22 +1,22 @@
 /**
- * @file PostCSS関連設定ファイル。
+ * @file Build settings of PostCSS.
  *
  * @author Koichi Nagaoka
  */
 
 const funcs         = require('../utils/functions');
-const config        = require('../settings');
+const settings      = require('../../config/settings');
 const fs            = require('fs-extra');
 const glob          = require('glob');
 const path          = require('path');
 const postcss       = require('postcss');
 const postcssConfig = require('../postcss.config');
 
-const stylesSrcDirPath   = `${config.appRoot}/${config.stylesDir}`;
-const stylesDestDirPath  = `${config.documentRoot}/${config.stylesDir}`;
+const stylesSrcDirPath   = `${settings.appRoot}/${settings.stylesDir}`;
+const stylesDestDirPath  = `${settings.documentRoot}/${settings.stylesDir}`;
 
 // target files
-const watchTargetFiles = glob.sync(`${stylesSrcDirPath}/**/!(_)*.${config.stylesExt}`);
+const watchTargetFiles = glob.sync(`${stylesSrcDirPath}/**/!(_)*.${settings.stylesExt}`);
 
 /**
  * build PostCSS files.
@@ -122,7 +122,7 @@ const buildProcessing = (file) => {
 
 // ビルド監視処理を開始する
 funcs.watchBuilding(
-  `${config.appRoot}/${config.stylesDir}`,
+  `${settings.appRoot}/${settings.stylesDir}`,
   buildProcessing,
   {
     noError: true

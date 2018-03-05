@@ -1,5 +1,5 @@
 /**
- * @file PostCSS関連設定ファイル。
+ * @file Settings of PostCSS.
  *
  * @author Koichi Nagaoka
  */
@@ -13,6 +13,7 @@ const easyImport    = require('postcss-easy-import');
 const mixins        = require('postcss-mixins');
 const functions     = require('postcss-functions');
 const calc          = require('postcss-calc');
+const hexrgba       = require('postcss-hexrgba');
 const webfont       = require('postcss-webfont');
 const reporter      = require('postcss-reporter');
 const assets        = require('postcss-assets');
@@ -24,7 +25,7 @@ const csswring      = require('csswring');
 const cssMqpacker   = require('css-mqpacker');
 const sugarss       = require('sugarss');
 const stylelint     = require('stylelint');
-const config        = require('./settings');
+const settings      = require('../config/settings');
 
 
 /**
@@ -57,8 +58,8 @@ const onUpdateRule = (rule, token, image) => {
   const spriteWidth       = toPixel(image.spriteWidth / image.ratio);
   const spriteHeight      = toPixel(image.spriteHeight / image.ratio);
   const spritePath        = path.relative(
-    `${config.appRoot}/${config.stylesDir}`,
-    `${config.appRoot}/${config.imagesDir}/${image.spriteUrl}`
+    `${settings.appRoot}/${settings.stylesDir}`,
+    `${settings.appRoot}/${settings.imagesDir}/${image.spriteUrl}`
   );
 
   // プロパティ情報を作成する
@@ -93,7 +94,7 @@ const onUpdateRule = (rule, token, image) => {
 };
 
 
-const imageDirPath = `${config.appRoot}/${config.imagesDir}`;
+const imageDirPath = `${settings.appRoot}/${settings.imagesDir}`;
 
 // ベースプラグイン設定情報
 const BASE_PLUGINS = [
@@ -101,7 +102,7 @@ const BASE_PLUGINS = [
     extensions: ['.sss'],
     plugins: [
       stylelint({
-        configBasedir: config.projectRoot,
+        configBasedir: settings.projectRoot,
         configFile: '.stylelintrc.yml'
       })
     ]
@@ -115,20 +116,21 @@ const BASE_PLUGINS = [
   calc({
     mediaQueries: true,
   }),
+  hexrgba(),
   webfont({
-    publishPath: config.documentRoot,
+    publishPath: settings.documentRoot,
     stylesheetPath: './styles',
-    outputPath: `${config.documentRoot}/fonts`,
+    outputPath: `${settings.documentRoot}/fonts`,
   }),
   sorting(),
   autoprefixer({
-    browsers: config.browsers
+    browsers: settings.browsers
   }),
   assets({
     loadPaths: [
       imageDirPath
     ],
-    basePath: config.appRoot,
+    basePath: settings.appRoot,
     baseUrl: '../',
     cachebuster: true
   }),
@@ -138,17 +140,17 @@ const BASE_PLUGINS = [
     retina: true,
     filterBy(image) {
 
-      return new RegExp(`${config.imagesDir}\/${config.spritesDir}`).test(
+      return new RegExp(`${settings.imagesDir}\/${settings.spritesDir}`).test(
         image.url) ? Promise.resolve() : Promise.reject();
 
     },
     spritesmith: {
-      padding: config.spritesPadding
+      padding: settings.spritesPadding
     },
     svgsprite: {
       shape: {
         spacing: {
-          padding: config.spritesPadding
+          padding: settings.spritesPadding
         }
       }
     },
@@ -156,13 +158,13 @@ const BASE_PLUGINS = [
       onUpdateRule,
     }
   }),
-  config.isProduction && cssMqpacker(),
-  config.isProduction && csswring({
+  settings.isProduction && cssMqpacker(),
+  settings.isProduction && csswring({
     removeAllComments: true
   }),
-  config.isStyleGuideEnabled && styleGuide({
+  settings.isStyleGuideEnabled && styleGuide({
     project: 'Example StyleGuide',
-    dest: `${config.documentRoot}/styleguide/index.html`,
+    dest: `${settings.documentRoot}/styleguide/index.html`,
     showCode: false,
   }),
   reporter({
@@ -174,7 +176,7 @@ const BASE_PLUGINS = [
 // 設定情報を返す
 module.exports = {
 
-  map: !config.isProduction,
+  map: !settings.isProduction,
   parser: sugarss,
   plugins: BASE_PLUGINS,
 

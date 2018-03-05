@@ -1,14 +1,14 @@
 /**
- * @file FuseBox関連設定ファイル。
+ * @file Build settings of FuseBox.
  *
  * @author Koichi Nagaoka
  */
 
-const funcs   = require('../utils/functions');
-const glob    = require('glob');
-const path    = require('path');
-const config  = require('../settings');
-const fsbx    = require('fuse-box');
+const glob      = require('glob');
+const path      = require('path');
+const funcs     = require('../utils/functions');
+const settings  = require('../../config/settings');
+const fsbx      = require('fuse-box');
 
 /**
  * FuseBoxのビルド処理を行う。
@@ -18,13 +18,13 @@ const buildProcess = () => {
 
   const babelPlugin = fsbx.BabelPlugin({
     config: {
-      sourceMaps: !config.isProduction,
+      sourceMaps: !settings.isProduction,
       presets: [
         [
           'env',
           {
             targets: {
-              browsers: config.browsers
+              browsers: settings.browsers
             }
           }
         ]
@@ -36,11 +36,11 @@ const buildProcess = () => {
   // FuseBoxの初期設定
   const fuse = fsbx.FuseBox.init({
     useTypescriptCompiler: false,
-    homeDir: `${config.projectRoot}`,
-    output: `${config.documentRoot}/${config.scriptsDir}/$name.js`,
-    sourceMaps: !config.isProduction,
+    homeDir: `${settings.projectRoot}`,
+    output: `${settings.documentRoot}/${settings.scriptsDir}/$name.js`,
+    sourceMaps: !settings.isProduction,
     hash: false,
-    cache: !config.isProduction,
+    cache: !settings.isProduction,
     plugins: [
       fsbx.EnvPlugin({
         NODE_ENV: process.env.NODE_ENV
@@ -49,7 +49,7 @@ const buildProcess = () => {
       fsbx.VueComponentPlugin({
         script: babelPlugin
       }),
-      config.isProduction && fsbx.UglifyJSPlugin(),
+      settings.isProduction && fsbx.UglifyJSPlugin(),
     ]
   });
 
@@ -57,14 +57,14 @@ const buildProcess = () => {
   const fuseBundles = []; // FuseBoxバンドル情報一覧
 
   // バンドルファイル分処理を繰り返す
-  glob.sync(`${config.scriptsBundlesPath}/**/*.${config.scriptsExt}`).forEach((file) => {
+  glob.sync(`${settings.scriptsBundlesPath}/**/*.${settings.scriptsExt}`).forEach((file) => {
 
-    const bundlePath    = file.substring(config.scriptsBundlesPath.length + 1);
-    const projectPath   = file.substring(config.projectRoot.length + 1);
+    const bundlePath    = file.substring(settings.scriptsBundlesPath.length + 1);
+    const projectPath   = file.substring(settings.projectRoot.length + 1);
 
     // バンドルファイルパス一覧へ追加する
     bundles.push({
-      name: `${path.dirname(bundlePath)}/${path.basename(bundlePath, `.${config.scriptsExt}`)}`,
+      name: `${path.dirname(bundlePath)}/${path.basename(bundlePath, `.${settings.scriptsExt}`)}`,
       projectPath
     });
 
@@ -75,11 +75,11 @@ const buildProcess = () => {
     return previous ? `${previous} + ${current.projectPath}` : current.projectPath;
   }, '');
 
-  // バンドルファイルとpacksファイルを作成する
-  fuse.bundle(config.scriptsBundleName)
+  // バンドルファイルを作成する
+  fuse.bundle(settings.scriptsBundleName)
     .instructions(`~ ${bundleVendorTargets}`);
 
-  // packsファイル分処理を繰り返す
+  // バンドルファイル分処理を繰り返す
   bundles.forEach((bundle) => {
 
     // バンドル一覧へ追加する
@@ -97,7 +97,7 @@ const buildProcess = () => {
 
 // ビルド監視処理を開始する
 funcs.watchBuilding(
-  `${config.appRoot}/${config.scriptsDir}`,
+  `${settings.appRoot}/${settings.scriptsDir}`,
   buildProcess,
   {
     noError: true
