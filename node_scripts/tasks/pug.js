@@ -7,84 +7,39 @@
 const funcs     = require('../utils/functions');
 const settings  = require('../../config/settings');
 const fs        = require('fs-extra');
-const glob      = require('glob');
-const path      = require('path');
 const pug       = require('pug');
 
-const viewsRootDirPath = `${settings.appRoot}/${settings.viewsRootDir}`;
 
-// target files
-const watchTargetFiles = glob.sync(`${viewsRootDirPath}/**/!(_)*.pug`);
+// Watch building
+funcs.watchBuildingDiff(
+  `${settings.appRoot}/${settings.viewsDir}`,
+  `${settings.appRoot}/${settings.viewsRootDir}`,
+  settings.documentRoot,
+  '**/!(_)*.pug',
+  (targetFile, outputDir, relativeFilePath, fileExt, resolve, reject) => {
 
-/**
- * build pug files.
- *
- * @param {string} file add or change file path
- */
-const buildProcessing = (file) => {
+    const funcPug = pug.compileFile(targetFile, settings.pugOptions);
 
-  return new Promise((resolve, reject) => {
+    // creates parent directories
+    fs.mkdirs(outputDir).then(() => {
 
-    const executeCompilePromises = [];
-    const targetFiles            = !file || watchTargetFiles.indexOf(file) === -1 ? watchTargetFiles : [file];
+      // creates write stream
+      const writeStream = fs.createWriteStream(
+        `${outputDir}/${relativeFilePath}.html`,
+        {
+          encoding: 'UTF-8'
+        }
+      );
 
-    // empty files?
-    if (targetFiles.length === 0) {
+      // define stream events
+      writeStream.on('finish', () => resolve())
+        .on('error', (error) => reject(error));
 
-      // returns successful
-      resolve();
-      return;
-
-    }
-
-    // for each target files
-    targetFiles.forEach((targetFile) => {
-
-      // creates promise for compiling pug file
-      executeCompilePromises.push(new Promise((compileResolve, compileReject) => {
-
-        const workFilePath    = `${targetFile.substring(viewsRootDirPath.length + 1)}`;
-        const targetDirPath   = path.dirname(`${settings.documentRoot}/${workFilePath}`);
-        const targetFileExt   = path.extname(workFilePath);
-        const targetFilePath  = path.basename(workFilePath, targetFileExt);
-        const func            = pug.compileFile(targetFile, settings.pugOptions);
-
-        // creates parent directories
-        fs.mkdirs(targetDirPath).then(() => {
-
-          // creates write stream
-          const writeStream = fs.createWriteStream(
-            `${targetDirPath}/${targetFilePath}.html`,
-            {
-              encoding: 'UTF-8'
-            }
-          );
-
-          // define stream events
-          writeStream.on('finish', () => compileResolve())
-            .on('error', (error) => compileReject(error));
-
-          // write html string
-          writeStream.write(func(settings.pugOptions.locals));
-          writeStream.end();
-
-        });
-
-      }));
+      // write html string
+      writeStream.write(funcPug(settings.pugOptions.locals));
+      writeStream.end();
 
     });
 
-    // Execute all compiling pug files
-    Promise.all(executeCompilePromises)
-      .then(() => resolve())
-      .catch((error) => reject(error));
-
-  });
-
-};
-
-// Watch building.
-funcs.watchBuilding(
-  `${settings.appRoot}/${settings.viewsDir}`,
-  buildProcessing
+  }
 );

@@ -5,6 +5,7 @@
  */
 
 const path          = require('path');
+const glob          = require('glob');
 const chokidar      = require('chokidar');
 const childProcess  = require('child_process');
 const chalk         = require('chalk');
@@ -82,12 +83,9 @@ exports.watch = (target, callback) => {
     })
     .on('ready', () => {
 
-      // 追加と更新のイベント登録
-      watcher.on('add', (file) => {
-
-        callback && callback(file);
-
-      }).on('change', (file) => {
+      // 更新のイベント登録
+      // (追加のイベント発生時に更新イベントも発生するので更新イベントだけでよい)
+      watcher.on('change', (file) => {
 
         callback && callback(file);
 
@@ -204,5 +202,90 @@ exports.watchBuilding = (watchTarget, buildCommand, options) => {
     process.env.NODE_WATCH && exports.watch(watchTarget, executeWrapper);
 
   }
+
+};
+
+
+/**
+ * 差分ビルド処理と監視処理を行う。
+ *
+ * 環境変数の NODE_WATCH が true の場合にはビルドと監視処理を行い、
+ * それ以外の場合はビルドのみを行う。
+ *
+ * @param {string}      watchTarget   監視対象ファイルまたはディレクトリ
+ * @param {string}      srcDirPath    対象ソースファイルディレクトリ
+ * @param {string}      destDirPath   対象出力先ディレクトリ
+ * @param {string}      pattern       ビルド対象ファイルパターン
+ * @param {function}    buildCommand  ビルド処理関数
+ */
+exports.watchBuildingDiff = (watchTarget, srcDirPath, destDirPath, pattern, buildCommand) => {
+
+  /**
+   * Copy materials files.
+   *
+   * @param {string} file add or change file path
+   */
+  const buildProcessing = (file) => {
+
+    // target files
+    const watchTargetFiles = glob.sync(`${srcDirPath}/${pattern}`);
+
+    return new Promise((resolve, reject) => {
+
+      const executeCompilePromises = [];
+      const targetFiles            = !file || watchTargetFiles.indexOf(file) === -1 ? watchTargetFiles : [file];
+
+      // empty files?
+      if (targetFiles.length === 0) {
+
+        // returns successful
+        resolve();
+        return;
+
+      }
+
+      // for each target files
+      targetFiles.forEach((targetFile) => {
+
+        // creates promise for compiling pug file
+        executeCompilePromises.push(new Promise((compileResolve, compileReject) => {
+
+          const workFilePath    = `${targetFile.substring(srcDirPath.length + 1)}`;
+          const targetDirPath   = path.dirname(`${destDirPath}/${workFilePath}`);
+          const targetFileExt   = path.extname(workFilePath);
+          const targetFilePath  = path.basename(workFilePath, targetFileExt);
+
+          // Execute buiding command
+          buildCommand(
+            targetFile,
+            targetDirPath,
+            targetFilePath,
+            targetFileExt,
+            compileResolve,
+            compileReject
+          );
+
+        }));
+
+      });
+
+      // Execute all compiling pug files
+      Promise.all(executeCompilePromises)
+        .then(() => resolve())
+        .catch((error) => reject(error));
+
+    });
+
+  };
+
+
+  // Watch building
+  exports.watchBuilding(
+    watchTarget,
+    buildProcessing,
+    {
+      noError: true
+    }
+  );
 
 };

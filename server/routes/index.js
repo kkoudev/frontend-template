@@ -1,13 +1,13 @@
 /**
- * @file Routing indices.
- *
- * @author Koichi Nagaoka
+ * @file Top page
  */
 
-const router = require('./router');
+module.exports = (router) => {
 
-//
-// TODO : Define routing rules.
-//
+  router.get('/', (req, res) => {
 
-module.exports = router;
+    res.render('index');
+
+  });
+
+};

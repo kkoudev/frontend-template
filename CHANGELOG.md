@@ -1,3 +1,14 @@
+# 0.3.0  (2018-03-11)
+
+### Added
+
+-   "material" task. This task is to copy some files in materials directory.
+
+### Changed
+
+-   Refactors all tasks.
+-   Updates template of backend-server.
+
 # 0.2.0  (2018-03-05)
 
 ### Added

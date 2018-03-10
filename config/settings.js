@@ -4,8 +4,12 @@
  * @author Koichi Nagaoka
  */
 
-const path    = require('path');
-const moment  = require('moment');
+const path      = require('path');
+const moment    = require('moment');
+const mozjpeg   = require('imagemin-mozjpeg');
+const pngquant  = require('imagemin-pngquant');
+const svgo      = require('imagemin-svgo');
+const gifsicle  = require('imagemin-gifsicle');
 
 
 // --------------------------------------------------
@@ -21,6 +25,7 @@ const documentRoot        = `${projectRoot}/${documentDir}`;        // Document 
 const bundlesDir          = 'bundles';                              // Bundle file directory name.
 const pagesDir            = 'pages';                                // Pages directory name.
 const appRoot             = `${projectRoot}/app`;                   // Directory path of client application.
+const serverRoot          = `${projectRoot}/server`;                // Directory path of server application.
 const scriptsDir          = 'scripts';                              // Script directory name.
 const scriptsBundlesDir   = `${scriptsDir}/${pagesDir}`;            // Bundle target JavaScript directory relative path.
 const scriptsBundlesPath  = `${appRoot}/${scriptsBundlesDir}`;      // Bundle target JavaScript directory full path.
@@ -33,6 +38,7 @@ const viewsRootDir        = `${viewsDir}/root`;                     // View root
 const imagesDir           = 'images';                               // Images directory name.
 const spritesDir          = '_sprites';                             // Sprites of images directory name.
 const spritesPadding      = 10;                                     // Padding of sprite image.
+const materialsDir        = 'materials';                            // Materials directory name.
 
 // Target image file extensions
 const imagesExts          = [
@@ -74,15 +80,39 @@ const pugOptions          = {
 
 };
 
+// imagemin plugins
+// eslint-disable-next-line
+const imageminPlugins = [
+  pngquant({
+    speed: 1,
+    nofs: false,
+  }),
+  mozjpeg({
+    quality: 100,
+    progressive: true,
+    quantTable: 3
+  }),
+  svgo({
+    plugins: [
+      {
+        removeTitle: true
+      },
+    ]
+  }),
+  gifsicle({
+    interlaced: true
+  })
+];
+
 
 // --------------------------------------------------
 // Server settings.
 // --------------------------------------------------
 
-const frontendServerPort  = 8000;   // Port number of frontend server. (BrowserSync)
-const backendServerPort   = 9000;   // Port number of backend server. (Express)
-const useBackendServer    = true;   // Use backend server or not.
-const backendURIRootPath  = '/';    // The root URI path of backend server.
+const frontendServerPort  = 8000;                         // Port number of frontend server. (BrowserSync)
+const backendServerPort   = 9000;                         // Port number of backend server. (Express)
+const backendSocketPath   = '/sockets/node.sock';         // Socket file path of backend server.
+const useBackendServer    = true;                         // Use backend server or not.
 
 
 module.exports = {
@@ -95,6 +125,7 @@ module.exports = {
   bundlesDir,
   pagesDir,
   appRoot,
+  serverRoot,
   scriptsDir,
   scriptsBundlesDir,
   scriptsBundlesPath,
@@ -107,11 +138,13 @@ module.exports = {
   imagesDir,
   spritesDir,
   spritesPadding,
+  materialsDir,
   imagesExts,
   browsers,
   pugOptions,
+  imageminPlugins,
   frontendServerPort,
   backendServerPort,
+  backendSocketPath,
   useBackendServer,
-  backendURIRootPath,
 };

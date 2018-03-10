@@ -69,7 +69,7 @@ yarn run start
 ## Build
 
 ```bash
-yarn run product
+yarn run dist
 ```
 
 ## Creates sprite image file

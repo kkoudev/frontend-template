@@ -8,4 +8,4 @@ const fs        = require('fs-extra');
 const settings  = require('../../config/settings');
 
 // Removes document root dir.
-fs.removeSync(settings.documentRoot);
+fs.emptyDir(settings.documentRoot);

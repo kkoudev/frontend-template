@@ -1,0 +1,44 @@
+block vars
+doctype html
+html(lang="ja")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="x-ua-compatible" content="ie=edge")
+    meta(name="description" content=description)
+    if keywords
+      meta(name="keywords" content=keywords)
+    meta(name="robots" content=`${robots ? robots : "follow,index"}`)
+    meta(name="viewport" content="width=device-width, target-densitydpi=medium-dpi, initial-scale=1, minimum-scale=1, maximum-scale=1, shrink-to-fit=no")
+    meta(name="format-detection" content=`${formatDetection ? formatDetection : "telephone=no, address=no, email=no"}`)
+    if topPage
+      meta(property="og:type" content="website")
+    else
+      meta(property="og:type" content="article")
+    meta(property="og:url" content=`${ogUrl ? ogUrl : ""}`)
+    meta(property="og:title" content=`${ogTitle ? ogTitle : title}`)
+    meta(property="og:description" content=`${ogDescription ? ogDescription : description}`)
+    meta(property="og:image" content=`${ogImage ? ogImage : ""}`)
+    meta(property="og:locale" content="ja_JP")
+    if env.dnsPrefetches && env.dnsPrefetches.length > 0
+      each dnsPrefetch in env.dnsPrefetches
+        link(rel="dns-prefetch" href=`//${dnsPrefetch}`)
+    if env.preconnects && env.preconnects.length > 0
+      each preconnect in env.preconnects
+        link(rel="preconnect" href=`${preconnect}`)
+    if canonical
+      link(rel="canonical" href=`${canonical}`)
+    if stylesheets
+      each stylesheet in stylesheets
+        link(rel="stylesheet" href=`/styles/${stylesheet}.css?${env.time}` media="all")
+    title=title
+    if head_scripts
+      each script in head_scripts
+        script(src=`/scripts/${script}.js?${env.time}` defer)
+
+  body
+    block content
+
+    script(src=`/scripts/vendor.js?${env.time}` defer)
+    script(src=`/scripts/common.js?${env.time}` defer)
+    each script in tail_scripts
+      script(src=`/scripts/${script}.js?${env.time}` defer)

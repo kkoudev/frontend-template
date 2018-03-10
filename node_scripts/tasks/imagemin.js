@@ -8,10 +8,6 @@ const glob      = require('glob');
 const path      = require('path');
 const fs        = require('fs-extra');
 const imagemin  = require('imagemin');
-const mozjpeg   = require('imagemin-mozjpeg');
-const pngquant  = require('imagemin-pngquant');
-const svgo      = require('imagemin-svgo');
-const gifsicle  = require('imagemin-gifsicle');
 
 const funcs     = require('../utils/functions');
 const settings  = require('../../config/settings');
@@ -37,27 +33,7 @@ funcs.watchBuilding(
       imagePaths,
       undefined,    // eslint-disable-line no-undefined
       {
-        plugins: settings.isProduction ? [
-          pngquant({
-            speed: 1,
-            nofs: false,
-          }),
-          mozjpeg({
-            quality: 100,
-            progressive: true,
-            quantTable: 3
-          }),
-          svgo({
-            plugins: [
-              {
-                removeTitle: true
-              },
-            ]
-          }),
-          gifsicle({
-            interlaced: true
-          })
-        ] : []
+        plugins: settings.imageminPlugins
       }
     ).then((files) => {
 

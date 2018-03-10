@@ -258,7 +258,7 @@ rules:
   # Legacy
   max-depth               : [2, 5]           # ネストの深さ
   max-len                 : [2, 120, 2]      # 1行における文字数
-  max-params              : [2, 5]           # 引数の数
+  max-params              : [2, 7]           # 引数の数
   max-statements          : [0, 30]          # ステートメント数
   no-bitwise              : 1                # ビット演算
   no-plusplus             : 0                # `++`, `--`は許可
