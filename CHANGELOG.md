@@ -1,3 +1,11 @@
+# 0.4.0  (2018-04-15)
+
+### Changed
+
+-   Rename `app` directory to `client`.
+-   Upgrade versions of all dependencies.
+-   Update NodeJS version `9.7.1` to `9.11.1`.
+
 # 0.3.0  (2018-03-11)
 
 ### Added

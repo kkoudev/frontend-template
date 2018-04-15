@@ -97,7 +97,7 @@ const buildProcess = () => {
 
 // ビルド監視処理を開始する
 funcs.watchBuilding(
-  `${settings.appRoot}/${settings.scriptsDir}`,
+  `${settings.clientRoot}/${settings.scriptsDir}`,
   buildProcess,
   {
     noError: true

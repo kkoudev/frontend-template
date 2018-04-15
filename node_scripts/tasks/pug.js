@@ -12,8 +12,8 @@ const pug       = require('pug');
 
 // Watch building
 funcs.watchBuildingDiff(
-  `${settings.appRoot}/${settings.viewsDir}`,
-  `${settings.appRoot}/${settings.viewsRootDir}`,
+  `${settings.clientRoot}/${settings.viewsDir}`,
+  `${settings.clientRoot}/${settings.viewsRootDir}`,
   settings.documentRoot,
   '**/!(_)*.pug',
   (targetFile, outputDir, relativeFilePath, fileExt, resolve, reject) => {

@@ -10,8 +10,8 @@ const settings  = require('../../config/settings');
 
 // Watch building
 funcs.watchBuilding(
-  `${settings.appRoot}/${settings.scriptsDir}`,
-  `esw --fix "${settings.appRoot}/${settings.scriptsDir}/**/*.${settings.scriptsExt}"`,
+  `${settings.clientRoot}/${settings.scriptsDir}`,
+  `esw --fix "${settings.clientRoot}/${settings.scriptsDir}/**/*.${settings.scriptsExt}"`,
   {
     noError: true
   }

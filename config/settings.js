@@ -24,11 +24,11 @@ const documentDir         = isProduction ? 'build' : '.temp';       // Document 
 const documentRoot        = `${projectRoot}/${documentDir}`;        // Document root directory path.
 const bundlesDir          = 'bundles';                              // Bundle file directory name.
 const pagesDir            = 'pages';                                // Pages directory name.
-const appRoot             = `${projectRoot}/app`;                   // Directory path of client application.
+const clientRoot             = `${projectRoot}/client`;             // Directory path of client application.
 const serverRoot          = `${projectRoot}/server`;                // Directory path of server application.
 const scriptsDir          = 'scripts';                              // Script directory name.
 const scriptsBundlesDir   = `${scriptsDir}/${pagesDir}`;            // Bundle target JavaScript directory relative path.
-const scriptsBundlesPath  = `${appRoot}/${scriptsBundlesDir}`;      // Bundle target JavaScript directory full path.
+const scriptsBundlesPath  = `${clientRoot}/${scriptsBundlesDir}`;   // Bundle target JavaScript directory full path.
 const scriptsExt          = 'js';                                   // Script file extension.
 const scriptsBundleName   = 'vendor';                               // Bundle file name of script libraries.
 const stylesDir           = 'styles';                               // CSS directory name.
@@ -124,7 +124,7 @@ module.exports = {
   documentRoot,
   bundlesDir,
   pagesDir,
-  appRoot,
+  clientRoot,
   serverRoot,
   scriptsDir,
   scriptsBundlesDir,

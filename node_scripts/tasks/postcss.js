@@ -13,8 +13,8 @@ const postcssConfig = require('../postcss.config');
 
 // Watch building
 funcs.watchBuildingDiff(
-  `${settings.appRoot}/${settings.stylesDir}`,
-  `${settings.appRoot}/${settings.stylesDir}/${settings.bundlesDir}`,
+  `${settings.clientRoot}/${settings.stylesDir}`,
+  `${settings.clientRoot}/${settings.stylesDir}/${settings.bundlesDir}`,
   `${settings.documentRoot}/${settings.stylesDir}`,
   `**/!(_)*.${settings.stylesExt}`,
   (targetFile, outputDir, relativeFilePath, fileExt, resolve, reject) => {

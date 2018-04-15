@@ -58,8 +58,8 @@ const onUpdateRule = (rule, token, image) => {
   const spriteWidth       = toPixel(image.spriteWidth / image.ratio);
   const spriteHeight      = toPixel(image.spriteHeight / image.ratio);
   const spritePath        = path.relative(
-    `${settings.appRoot}/${settings.stylesDir}`,
-    `${settings.appRoot}/${settings.imagesDir}/${image.spriteUrl}`
+    `${settings.clientRoot}/${settings.stylesDir}`,
+    `${settings.clientRoot}/${settings.imagesDir}/${image.spriteUrl}`
   );
 
   // プロパティ情報を作成する
@@ -94,7 +94,7 @@ const onUpdateRule = (rule, token, image) => {
 };
 
 
-const imageDirPath = `${settings.appRoot}/${settings.imagesDir}`;
+const imageDirPath = `${settings.clientRoot}/${settings.imagesDir}`;
 
 // ベースプラグイン設定情報
 const BASE_PLUGINS = [
@@ -130,7 +130,7 @@ const BASE_PLUGINS = [
     loadPaths: [
       imageDirPath
     ],
-    basePath: settings.appRoot,
+    basePath: settings.clientRoot,
     baseUrl: '../',
     cachebuster: true
   }),

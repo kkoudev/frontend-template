@@ -11,8 +11,8 @@ const settings    = require('../../config/settings');
 
 // Watch building
 funcs.watchBuildingDiff(
-  `${settings.appRoot}/${settings.materialsDir}`,
-  `${settings.appRoot}/${settings.materialsDir}`,
+  `${settings.clientRoot}/${settings.materialsDir}`,
+  `${settings.clientRoot}/${settings.materialsDir}`,
   `${settings.documentRoot}/${settings.materialsDir}`,
   '**/*',
   (targetFile, outputDir, relativeFilePath, fileExt, resolve, reject) => {

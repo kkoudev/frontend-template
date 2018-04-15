@@ -15,14 +15,14 @@ const settings  = require('../../config/settings');
 
 // ビルド監視処理を開始する
 funcs.watchBuilding(
-  `${settings.appRoot}/${settings.imagesDir}`,
+  `${settings.clientRoot}/${settings.imagesDir}`,
   () => {
 
     // 対象画像ファイルパス一覧を取得する
     const imagePaths = glob.sync(
-      `${settings.appRoot}/${settings.imagesDir}/**/*.{${settings.imagesExts.join(',')}}`,
+      `${settings.clientRoot}/${settings.imagesDir}/**/*.{${settings.imagesExts.join(',')}}`,
       {
-        ignore: `${settings.appRoot}/${settings.imagesDir}/${settings.spritesDir}/**/*`
+        ignore: `${settings.clientRoot}/${settings.imagesDir}/${settings.spritesDir}/**/*`
       }
     );
 
@@ -43,7 +43,7 @@ funcs.watchBuilding(
         // 出力先ファイルパスを作成する
         const destImageFilePath = path.resolve(
           settings.documentRoot,
-          path.relative(settings.appRoot, imagePaths[index])
+          path.relative(settings.clientRoot, imagePaths[index])
         );
 
         // ファイルを書き込む
