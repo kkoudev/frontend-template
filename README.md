@@ -63,13 +63,13 @@ app/styles/parts
 ## Launch
 
 ```bash
-yarn run start
+yarnw start
 ```
 
 ## Build
 
 ```bash
-yarn run dist
+yarnw dist
 ```
 
 ## Creates sprite image file

@@ -138,7 +138,7 @@ const BASE_PLUGINS = [
     stylesheetPath: imageDirPath,
     spritePath: imageDirPath,
     retina: true,
-    filterBy(image) {
+    filterBy (image) {
 
       return new RegExp(`${settings.imagesDir}\/${settings.spritesDir}`).test(
         image.url) ? Promise.resolve() : Promise.reject();

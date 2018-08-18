@@ -1,3 +1,20 @@
+# 0.6.0  (2018-08-19)
+
+### Added
+
+-   "jest" module.
+
+### Changed
+
+-   Upgrade versions of all dependences.
+-   Node.js version `10.9.0`.
+-   ESLint rules.
+-   Use "ndw" in setup.sh.
+
+### Removed
+
+-   "karma" and "jasmine" related modules.
+
 # 0.5.0  (2018-04-15)
 
 ### Added
@@ -10,7 +27,7 @@
 
 -   Rename `app` directory to `client`.
 -   Upgrade versions of all dependencies.
--   Update NodeJS version `9.7.1` to `9.11.1`.
+-   Update Node.js version `9.7.1` to `9.11.1`.
 
 # 0.3.0  (2018-03-11)
 

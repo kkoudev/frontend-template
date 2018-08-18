@@ -3,7 +3,7 @@ parser: "babel-eslint"
 
 parserOptions:
   ecmaVersion: 6
-  sourceType: 'module'
+  sourceType: "module"
 
 env:
   browser: true
@@ -19,7 +19,7 @@ globals:
 # eslint rules -> 0: disable, 1: warn, 2: error
 rules:
   # Possible Errors
-  comma-dangle            : [0, 'never']
+  comma-dangle            : [0, "never"]
   no-cond-assign          : 2
   no-console              : 1
   no-constant-condition   : 2
@@ -35,7 +35,7 @@ rules:
   no-extra-parens         : 1
   no-extra-semi           : 2
   no-func-assign          : 2
-  no-inner-declarations   : [2, 'both']
+  no-inner-declarations   : [2, "both"]
   no-invalid-regexp       : 2
   no-irregular-whitespace : 2
   no-negated-in-lhs       : 2
@@ -87,9 +87,9 @@ rules:
   }]
   no-multi-spaces         : [0, {
     exceptions: {
-      'Property'           : true,
-      'VariableDeclarator' : true,
-      'ImportDeclaration'  : true
+      "Property"           : true,
+      "VariableDeclarator" : true,
+      "ImportDeclaration"  : true
     }
   }]
   no-multi-str            : 2
@@ -126,27 +126,27 @@ rules:
   yoda                    : 2
 
   # Strict Mode
-  strict                  : [2, 'never']
+  strict                  : [2, "never"]
 
   # Variables
-  init-declarations       : [2, 'always']
+  init-declarations       : [2, "always"]
   no-catch-shadow         : 2
   no-delete-var           : 2
   no-label-var            : 2
   no-shadow-restricted-names : 2
   no-shadow               : [2, {
     builtinGlobals: false,
-    hoist         : 'all'
+    hoist         : "all"
   }]
   no-undef-init           : 2
   no-undef                : 1
   no-undefined            : 2
   no-unused-vars          : 2
-  no-use-before-define    : [1, 'nofunc']
+  no-use-before-define    : [1, "nofunc"]
 
   # Node.js and CommonJS
   callback-return         : [2,
-    ['callback', 'cb', 'next']
+    ["callback", "cb", "next"]
   ]
   global-require          : 2
   handle-callback-err     : [2, "^(err|error)$"]
@@ -158,25 +158,25 @@ rules:
   no-sync                 : 0
 
   # Stylistic Issues
-  array-bracket-spacing   : [2, 'never']
-  block-spacing           : [2, 'always']
-  brace-style             : [2, '1tbs', {
+  array-bracket-spacing   : [2, "never"]
+  block-spacing           : [2, "always"]
+  brace-style             : [2, "1tbs", {
     allowSingleLine: true
   }]
   camelcase               : 0
   comma-spacing           : 2
-  comma-style             : [2, 'last']
+  comma-style             : [2, "last"]
   computed-property-spacing: 2
-  consistent-this         : [2, 'self']
+  consistent-this         : [2, "self"]
   eol-last                : 2
   func-names              : 0
-  func-style              : [2, 'expression']
+  func-style              : [2, "expression"]
   id-length               : 0
   id-match                : 0
   indent                  : [2, 2, {
     SwitchCase: 1
   }]
-  jsx-quotes              : [2, 'prefer-double']
+  jsx-quotes              : [2, "prefer-double"]
   key-spacing             : [0, {
     align: "colon"
   }]
@@ -189,7 +189,7 @@ rules:
     allowBlockStart   : false,
     allowBlockEnd     : false
   }]
-  linebreak-style         : [2, 'unix']
+  linebreak-style         : [2, "unix"]
   max-nested-callbacks    : [2, 3]
   new-cap                 : [2, {
     properties: false
@@ -211,28 +211,32 @@ rules:
   no-trailing-spaces      : 2
   no-underscore-dangle    : 0
   no-unneeded-ternary     : 2
-  object-curly-spacing    : [2, 'always']
+  object-curly-spacing    : [2, "always"]
   one-var                 : 0
-  operator-assignment     : [2, 'always']
+  operator-assignment     : [2, "always"]
   operator-linebreak      : 0
   padded-blocks           : 0
-  quote-props             : [2, 'as-needed']
-  quotes                  : [2, 'single']
+  quote-props             : [2, "as-needed"]
+  quotes                  : [2, "single"]
   require-jsdoc           : 1
   semi-spacing            : 2
-  semi                    : [2, 'always']
+  semi                    : [2, "always"]
   sort-vars               : 0
-  space-before-blocks     : [2, 'always']
-  space-before-function-paren: [2, 'never']
-  space-in-parens         : [2, 'never']
+  space-before-blocks     : [2, "always"]
+  space-before-function-paren: ["error", {
+    "anonymous": "always",
+    "named": "always",
+    "asyncArrow": "ignore"
+  }]
+  space-in-parens         : [2, "never"]
   space-infix-ops         : 2
   space-unary-ops         : 2
-  spaced-comment          : [2, 'always']
+  spaced-comment          : [2, "always"]
   wrap-regex              : 0
 
   # ECMAScript 6
   arrow-body-style        : [0, "as-needed"]
-  arrow-parens            : [2, 'always']
+  arrow-parens            : [2, "always"]
   arrow-spacing           : [2, {
     before: true,
     after: true
@@ -247,7 +251,7 @@ rules:
   no-dupe-class-members   : 2
   no-this-before-super    : 2
   no-var                  : 2
-  object-shorthand        : [2, 'always']
+  object-shorthand        : [2, "always"]
   prefer-arrow-callback   : 2
   prefer-const            : 2
   prefer-spread           : 2
