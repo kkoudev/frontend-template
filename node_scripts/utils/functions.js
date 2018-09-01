@@ -1,5 +1,5 @@
 /**
- * @file タスク設定で利用する共通関数定義
+ * @file Common functions for task processing.
  *
  * @author Koichi Nagaoka
  */
@@ -12,33 +12,47 @@ const chalk         = require('chalk');
 const notifier      = require('node-notifier');
 const moment        = require('moment');
 const log           = console.log;    // eslint-disable-line no-console
-const logError      = console.error;  // eslint-disable-line no-console
 
-// コマンド実行で利用する環境変数を定義する
+// Environment variables for execution commands.
 const usingEnv = Object.assign({}, process.env, {
   FORCE_COLOR: true
 });
 
-// デフォルトタスク名
+// Default task name.
 const defaultTaskName = path.basename(process.argv[1], '.js');
 
-// コンソール時間フォーマット
+// Console time format.
 const formatConsoleTime = 'HH:mm:ss';
 
-// エラー通知ベース設定
+// Error notification base settings.
 const errorNotifyOptions = {
   title: 'Error Occurred',
-  message: 'エラーが発生しました。コンソールの内容を確認してください',
+  message: 'Please confirm console error messages.',
   sound: 'Basso',
 };
 
 
 /**
- * 指定されたコマンドを実行する。
+ * Output error log and notify error.
  *
- * @param {string}    command     コマンド文字列
- * @param {object}    [options]   実行オプション
- * @param {function}  [callback]  コールバック関数
+ * @param {string} error error message.
+ */
+const logError = (error) => {
+
+  // notify specified error.
+  notifier.notify(errorNotifyOptions);
+
+  // output error log.
+  console.error(error); // eslint-disable-line no-console
+
+};
+
+/**
+ * Execute specified commands.
+ *
+ * @param {string}    command     command strings
+ * @param {object}    [options]   options for execution.
+ * @param {function}  [callback]  callback function.
  */
 exports.exec = (command, options, callback) => {
 
@@ -49,14 +63,6 @@ exports.exec = (command, options, callback) => {
       env: usingEnv
     },
     (error, stdout, stderr) => {
-
-      // エラーがある場合
-      if (error) {
-
-        // エラー内容を通知する
-        notifier.notify(errorNotifyOptions);
-
-      }
 
       (!options || !options.noError && error) && logError(error);
       (!options || !options.noStdout && stdout) && log(stdout);
@@ -69,10 +75,10 @@ exports.exec = (command, options, callback) => {
 
 
 /**
- * 指定されたターゲットを変更監視対象とする。
+ * Watch target file or directory.
  *
- * @param {string}    target      監視対象ファイルまたはディレクトリ
- * @param {function}  [callback]  監視追加変更時のコールバック関数
+ * @param {string}    target      target file or directory.
+ * @param {function}  [callback]  callback function fo updating file.
  */
 exports.watch = (target, callback) => {
 
@@ -83,8 +89,6 @@ exports.watch = (target, callback) => {
     })
     .on('ready', () => {
 
-      // 更新のイベント登録
-      // (追加のイベント発生時に更新イベントも発生するので更新イベントだけでよい)
       watcher.on('change', (file) => {
 
         callback && callback(file);
@@ -97,23 +101,21 @@ exports.watch = (target, callback) => {
 
 
 /**
- * 処理開始のコンソール文字列を出力する
+ * Output beginning discription.
  *
- * @param {string} [taskName] 実行タスク名
- * @returns {object} 実行開始コンテキスト
+ * @param {string} [taskName] Executing task name
+ * @returns {object} execution beginning context.
  */
 exports.consoleBegin = (taskName) => {
 
-  const beginTime     = new Date();                   // 開始日時
-  const usingTaskName = taskName || defaultTaskName;  // 実行タスク名
+  const beginTime     = new Date();
+  const usingTaskName = taskName || defaultTaskName;
 
-  // 実行開始情報をコンソールへ出力する
   log(
     `[${chalk.gray(moment(beginTime).format(formatConsoleTime))}]`,
     `Beginning '${chalk.cyan(usingTaskName)}'....`
   );
 
-  // 実行開始情報を返す
   return {
     taskName: usingTaskName,
     beginTime,
@@ -123,16 +125,15 @@ exports.consoleBegin = (taskName) => {
 
 
 /**
- * 処理終了のコンソール文字列を出力する。
+ * Output finishing discription.
  *
- * @param {object} context 実行開始コンテキスト
+ * @param {object} context execution beginning context.
  */
 exports.consoleFinish = (context) => {
 
-  const finishedTime  = new Date();                       // 処理終了時間
-  const processMillis = finishedTime - context.beginTime; // 処理時間(ms)
+  const finishedTime  = new Date();
+  const processMillis = finishedTime - context.beginTime;
 
-  // 実行終了情報をコンソールへ出力する
   log(
     `[${chalk.gray(moment(finishedTime).format(formatConsoleTime))}]`,
     `Finished '${chalk.cyan(context.taskName)}' after ${chalk.magenta(processMillis)} ms`
@@ -142,14 +143,14 @@ exports.consoleFinish = (context) => {
 
 
 /**
- * ビルド処理と監視処理を行う。
+ * Executes building and watching.
  *
- * 環境変数の NODE_WATCH が true の場合にはビルドと監視処理を行い、
- * それ以外の場合はビルドのみを行う。
+ * Executes building and watching if set environment variable of "NODE_WATCH" is true.
+ * Otherwise build only.
  *
- * @param {string}              watchTarget   監視対象ファイルまたはディレクトリ
- * @param {(string|function)}   buildCommand  ビルドコマンドまたは処理関数。処理関数の場合は Promise を返却すること
- * @param {object}              [options]     実行オプション
+ * @param {string}              watchTarget   target file or directory.
+ * @param {(string|function)}   buildCommand  Build commands or function. In function case, it must returns Promise.
+ * @param {object}              [options]     Options for execution.
  */
 exports.watchBuilding = (watchTarget, buildCommand, options) => {
 
@@ -159,7 +160,6 @@ exports.watchBuilding = (watchTarget, buildCommand, options) => {
 
       const beginContext = exports.consoleBegin();
 
-      // ビルド処理を実行する
       buildCommand(file, options).then(() => {
 
         exports.consoleFinish(beginContext);
@@ -174,10 +174,10 @@ exports.watchBuilding = (watchTarget, buildCommand, options) => {
 
     };
 
-    // ビルド処理を実行する
+    // Executes build processing
     executeWrapper();
 
-    // 監視処理が有効な場合は監視処理を実行する
+    // Watch target file or directory
     process.env.NODE_WATCH && exports.watch(watchTarget, executeWrapper);
 
   } else {
@@ -186,7 +186,6 @@ exports.watchBuilding = (watchTarget, buildCommand, options) => {
 
       const beginContext = exports.consoleBegin();
 
-      // ビルド処理を実行する
       exports.exec(buildCommand, options, () => {
 
         exports.consoleFinish(beginContext);
@@ -195,10 +194,10 @@ exports.watchBuilding = (watchTarget, buildCommand, options) => {
 
     };
 
-    // ビルド処理を実行する
+    // Executes build processing
     executeWrapper();
 
-    // 監視処理が有効な場合は監視処理を実行する
+    // Watch target file or directory
     process.env.NODE_WATCH && exports.watch(watchTarget, executeWrapper);
 
   }
@@ -207,16 +206,16 @@ exports.watchBuilding = (watchTarget, buildCommand, options) => {
 
 
 /**
- * 差分ビルド処理と監視処理を行う。
+ * Executes differential building and watching.
  *
- * 環境変数の NODE_WATCH が true の場合にはビルドと監視処理を行い、
- * それ以外の場合はビルドのみを行う。
+ * Executes building and watching if set environment variable of "NODE_WATCH" is true.
+ * Otherwise build only.
  *
- * @param {string}      watchTarget   監視対象ファイルまたはディレクトリ
- * @param {string}      srcDirPath    対象ソースファイルディレクトリ
- * @param {string}      destDirPath   対象出力先ディレクトリ
- * @param {string}      pattern       ビルド対象ファイルパターン
- * @param {function}    buildCommand  ビルド処理関数
+ * @param {string}      watchTarget   target file or directory.
+ * @param {string}      srcDirPath    target source directory path.
+ * @param {string}      destDirPath   target destination directory path.
+ * @param {string}      pattern       target file pattern.
+ * @param {function}    buildCommand  build processing function.
  */
 exports.watchBuildingDiff = (watchTarget, srcDirPath, destDirPath, pattern, buildCommand) => {
 
@@ -282,10 +281,7 @@ exports.watchBuildingDiff = (watchTarget, srcDirPath, destDirPath, pattern, buil
   // Watch building
   exports.watchBuilding(
     watchTarget,
-    buildProcessing,
-    {
-      noError: true
-    }
+    buildProcessing
   );
 
 };
