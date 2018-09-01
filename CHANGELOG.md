@@ -1,3 +1,13 @@
+# 0.7.0  (2018-09-01)
+
+### Fixed
+
+-   Cannot output console error message.
+
+### Changed
+
+-   Upgrade versions of all dependences.
+
 # 0.6.0  (2018-08-19)
 
 ### Added
