@@ -78,7 +78,7 @@ exports.exec = (command, options, callback) => {
  * Watch target file or directory.
  *
  * @param {string}    target      target file or directory.
- * @param {function}  [callback]  callback function fo updating file.
+ * @param {function}  [callback]  callback function for updating file.
  */
 exports.watch = (target, callback) => {
 
