@@ -215,9 +215,10 @@ exports.watchBuilding = (watchTarget, buildCommand, options) => {
  * @param {string}      srcDirPath    target source directory path.
  * @param {string}      destDirPath   target destination directory path.
  * @param {string}      pattern       target file pattern.
+ * @param {object}      globoptions   target file glob options.
  * @param {function}    buildCommand  build processing function.
  */
-exports.watchBuildingDiff = (watchTarget, srcDirPath, destDirPath, pattern, buildCommand) => {
+exports.watchBuildingDiff = (watchTarget, srcDirPath, destDirPath, pattern, globoptions, buildCommand) => {
 
   /**
    * Copy materials files.
@@ -227,7 +228,7 @@ exports.watchBuildingDiff = (watchTarget, srcDirPath, destDirPath, pattern, buil
   const buildProcessing = (file) => {
 
     // target files
-    const watchTargetFiles = glob.sync(`${srcDirPath}/${pattern}`);
+    const watchTargetFiles = glob.sync(`${srcDirPath}/${pattern}`, globoptions || {});
 
     return new Promise((resolve, reject) => {
 

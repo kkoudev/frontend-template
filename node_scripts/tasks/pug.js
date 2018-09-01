@@ -16,6 +16,7 @@ funcs.watchBuildingDiff(
   `${settings.clientRoot}/${settings.viewsRootDir}`,
   settings.documentRoot,
   '**/!(_)*.pug',
+  false,
   (targetFile, outputDir, relativeFilePath, fileExt, resolve, reject) => {
 
     const funcPug = pug.compileFile(targetFile, settings.pugOptions);

@@ -1,3 +1,14 @@
+# 0.8.0  (2018-09-01)
+
+### Added
+
+-   "rxjs" module.
+-   "compress-images" module.
+
+### Removed
+
+-   "imagemin" related modules.
+
 # 0.7.0  (2018-09-01)
 
 ### Fixed

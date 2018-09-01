@@ -17,6 +17,7 @@ funcs.watchBuildingDiff(
   `${settings.clientRoot}/${settings.stylesDir}/${settings.bundlesDir}`,
   `${settings.documentRoot}/${settings.stylesDir}`,
   `**/!(_)*.${settings.stylesExt}`,
+  false,
   (targetFile, outputDir, relativeFilePath, fileExt, resolve, reject) => {
 
     const readBuffers         = [];

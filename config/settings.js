@@ -6,11 +6,6 @@
 
 const path      = require('path');
 const moment    = require('moment');
-const mozjpeg   = require('imagemin-mozjpeg');
-const pngquant  = require('imagemin-pngquant');
-const svgo      = require('imagemin-svgo');
-const gifsicle  = require('imagemin-gifsicle');
-
 
 // --------------------------------------------------
 // Common settings
@@ -18,6 +13,7 @@ const gifsicle  = require('imagemin-gifsicle');
 
 const isProduction        = process.env.NODE_ENV === 'production';  // Production mode or not.
 const isStyleGuideEnabled = process.env.STYLE_GUIDE === 'true';     // Creates styleguide or not.
+const isCompressImage     = process.env.COMPRESS_IMAGE === 'true';  // Compress images or not.
 const projectRoot         = path.resolve(__dirname, '..');          // Project root directory path.
 const scriptsRoot         = `${projectRoot}/node_scripts`;          // Task script root directory path.
 const documentDir         = isProduction ? 'build' : '.temp';       // Document directory name.
@@ -80,29 +76,41 @@ const pugOptions          = {
 
 };
 
-// imagemin plugins
-// eslint-disable-next-line
-const imageminPlugins = [
-  pngquant({
-    speed: 1,
-    nofs: false,
-  }),
-  mozjpeg({
-    quality: 100,
-    progressive: true,
-    quantTable: 3
-  }),
-  svgo({
-    plugins: [
-      {
-        removeTitle: true
-      },
-    ]
-  }),
-  gifsicle({
-    interlaced: true
-  })
-];
+// compress-images settings
+const compressImagesOptions = {
+
+  // jpg options
+  jpg: {
+    jpg: {
+      engine: 'jpegtran',
+      command: ['-progressive', '-copy', 'none', '-optimize']
+    }
+  },
+
+  // png options
+  png: {
+    png: {
+      engine: 'pngquant',
+      command: ['--speed', '1']
+    }
+  },
+
+  // svg options
+  svg: {
+    svg: {
+      engine: 'svgo',
+      command: ['--multipass']
+    }
+  },
+
+  gif: {
+    gif: {
+      engine: 'gifsicle',
+      command: ['--interlace']
+    }
+  }
+
+};
 
 
 // --------------------------------------------------
@@ -118,6 +126,7 @@ const useBackendServer    = true;                         // Use backend server 
 module.exports = {
   isProduction,
   isStyleGuideEnabled,
+  isCompressImage,
   projectRoot,
   scriptsRoot,
   documentDir,
@@ -142,7 +151,7 @@ module.exports = {
   imagesExts,
   browsers,
   pugOptions,
-  imageminPlugins,
+  compressImagesOptions,
   frontendServerPort,
   backendServerPort,
   backendSocketPath,

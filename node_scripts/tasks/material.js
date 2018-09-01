@@ -15,23 +15,31 @@ funcs.watchBuildingDiff(
   `${settings.clientRoot}/${settings.materialsDir}`,
   `${settings.documentRoot}/${settings.materialsDir}`,
   '**/*',
+  false,
   (targetFile, outputDir, relativeFilePath, fileExt, resolve, reject) => {
 
-    // copy target file
-    fs.copy(targetFile, `${outputDir}/${relativeFilePath}${fileExt}`, (error) => {
+    // creates parent directories
+    fs.mkdirs(outputDir, (mkdirError) => {
 
-      // error occurred?
-      if (error) {
+      // if error occurreded, returns mkdir error
+      mkdirError && reject(mkdirError);
 
-        // returns error
-        reject(error);
+      fs.copy(targetFile, `${outputDir}/${relativeFilePath}${fileExt}`, (error) => {
 
-      } else {
+        // error occurred?
+        if (error) {
 
-        // successful
-        resolve();
+          // returns error
+          reject(error);
 
-      }
+        } else {
+
+          // successful
+          resolve();
+
+        }
+
+      });
 
     });
 
