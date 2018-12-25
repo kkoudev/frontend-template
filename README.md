@@ -9,6 +9,7 @@ This template is frontend project template.
 ```
 .
 ├── app                   # ソースファイルディレクトリ。このディレクトリ内にあるファイルを編集する
+├── config                # 設定ファイル情報
 ├── test                  # ユニットテストのソースファイルディレクトリ
 ├── node_scripts          # Nodeタスクスクリプト格納ディレクトリ
 ├── .editorconfig         # エディタ設定情報
@@ -22,10 +23,10 @@ This template is frontend project template.
 └── README.md
 ```
 
-### `app` directory
+### `app/client` directory
 
 ```
-app
+app/client
 ├── images                # 画像格納ディレクトリ
 ├── materials             # その他ファイル格納ディレクトリ
 ├── scripts               # JavsScriptファイル(*.js)格納ディレクトリ
@@ -33,16 +34,15 @@ app
 └── views                 # Pugファイル(*.pug)格納ディレクトリ
 ```
 
-### `app/styles` directory
+### `app/client/styles` directory
 
 ```
-app/styles
-├── pages                 # 各機能単位で利用するCSS格納ディレクトリ。画面ではここで定義された必要なCSSを読み込む
+app/client/styles
+├── bundles               # CSSをまとめたバンドルファイルCSS格納ディレクトリ
 ├── parts                 # パーツ関連のCSS格納ディレクトリ
 ├── vars                  # 変数を定義したCSS格納ディレクトリ
 ├── _default.sss          # 要素型セレクタのデフォルトスタイルを定義したファイル
-├── _mixins.sss           # 全体的によく利用する mixin を定義したファイル
-└── _styleguide.sss       # スタイルガイド用に使用するスタイルを定義したファイル
+└── _mixins.sss           # 全体的によく利用する mixin を定義したファイル
 ```
 
 ### `app/styles/parts` directory
@@ -51,7 +51,9 @@ app/styles
 app/styles/parts
 ├── atoms                 # 原子(Atoms)パーツに関するCSS格納ディレクトリ
 ├── molecules             # 分子(Molecules)パーツに関するCSS格納ディレクトリ
-└── organisms             # 有機体(Organisms)パーツに関するCSS格納ディレクトリ
+├── organisms             # 有機体(Organisms)パーツに関するCSS格納ディレクトリ
+├── templates             # テンプレート(Templates)パーツに関するCSS格納ディレクトリ
+└── pages                 # ページ(Pages)パーツに関するCSS格納ディレクトリ
 ```
 
 ## Installation
@@ -63,13 +65,13 @@ app/styles/parts
 ## Launch
 
 ```bash
-yarnw start
+yarn start
 ```
 
 ## Build
 
 ```bash
-yarnw dist
+yarn dist
 ```
 
 ## Creates sprite image file
@@ -169,17 +171,6 @@ iconfont-(@font-faceで指定されたfont-family名)-(拡張子を除いたSVG�
 ```
 
 あとは、アイコンフォントを利用する要素に生成された `iconfont-example-XXX` の名称のルールセットをクラス属性に指定するだけで適用できます。
-
-## Creates styleguide
-
-スタイルガイドは `postcss-style-guide` にて作成しており、<br>
-各パーツの `*.sss` ファイルの上部にコメントを記述することで生成します。<br>
-**パーツを追加するたびに、必ずスタイルガイドを作成するようにしてください**。<br>
-コメントの記述方法については以下の postcss-style-guide のgithubページを参照してください。<br>
-[https://github.com/morishitter/postcss-style-guide](https://github.com/morishitter/postcss-style-guide)
-<br>
-<br>
-スタイルガイドは `http://localhost:8000/styleguide/` をブラウザで開くことで閲覧できます。
 
 ## Design of css
 
