@@ -19,6 +19,8 @@ This template is frontend project template.
 ├── .stylelintrc.yml      # stylelintのルール設定
 ├── package.json          # npmパッケージ設定ファイル
 ├── setup.sh              # ローカル環境構築用スクリプト
+├── tsconfig.json         # TypeScript設定ファイル
+├── tslint.json           # TSLint設定ファイル
 ├── yarn.lock             # 開発時点での依存関係ファイル
 └── README.md
 ```
