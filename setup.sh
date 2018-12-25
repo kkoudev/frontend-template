@@ -29,9 +29,9 @@ if [[ $? -ne 0 ]]; then
 
 fi
 
-ndw install $(ndw current | tr -d '\n')
+ndw install -c -s
 ndw install-yarn
-yarnw
+yarn
 
 echo '======================================================================='
 echo 'Complete setup.'
