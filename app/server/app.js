@@ -4,7 +4,7 @@
  * @author Koichi Nagaoka
  */
 
-const settings      = require('../config/settings');
+const settings      = require('../../config/settings');
 const fs            = require('fs-extra');
 const express       = require('express');
 const morgan        = require('morgan');

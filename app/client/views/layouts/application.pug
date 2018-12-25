@@ -8,7 +8,7 @@ html(lang="ja")
     if keywords
       meta(name="keywords" content=keywords)
     meta(name="robots" content=`${robots ? robots : "follow,index"}`)
-    meta(name="viewport" content="width=device-width, target-densitydpi=medium-dpi, initial-scale=1, minimum-scale=1, maximum-scale=1, shrink-to-fit=no")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
     meta(name="format-detection" content=`${formatDetection ? formatDetection : "telephone=no, address=no, email=no"}`)
     if topPage
       meta(property="og:type" content="website")
@@ -19,9 +19,6 @@ html(lang="ja")
     meta(property="og:description" content=`${ogDescription ? ogDescription : description}`)
     meta(property="og:image" content=`${ogImage ? ogImage : ""}`)
     meta(property="og:locale" content="ja_JP")
-    if env.dnsPrefetches && env.dnsPrefetches.length > 0
-      each dnsPrefetch in env.dnsPrefetches
-        link(rel="dns-prefetch" href=`//${dnsPrefetch}`)
     if env.preconnects && env.preconnects.length > 0
       each preconnect in env.preconnects
         link(rel="preconnect" href=`${preconnect}`)

@@ -7,19 +7,17 @@
 const fs            = require('fs');
 const path          = require('path');
 const postcss       = require('postcss');
-const nestedProps   = require('postcss-nested-props');
+const nested        = require('postcss-nested');
 const sorting       = require('postcss-sorting');
 const easyImport    = require('postcss-easy-import');
+const simpleVars    = require('postcss-simple-vars');
 const mixins        = require('postcss-mixins');
-const functions     = require('postcss-functions');
 const calc          = require('postcss-calc');
 const hexrgba       = require('postcss-hexrgba');
 const webfont       = require('postcss-webfont');
 const reporter      = require('postcss-reporter');
 const assets        = require('postcss-assets');
 const sprites       = require('postcss-sprites');
-const styleGuide    = require('postcss-style-guide');
-const precss        = require('precss');
 const autoprefixer  = require('autoprefixer');
 const csswring      = require('csswring');
 const cssMqpacker   = require('css-mqpacker');
@@ -29,10 +27,10 @@ const settings      = require('../config/settings');
 
 
 /**
- * 単位付きサイズを取得する。
+ * Get value of pixel unit.
  *
- * @param {number} value ピクセルサイズとなる値
- * @returns {string} 値が 0 以外なら px 単位付きで返す。0の場合は単位無し
+ * @param {number} value pixel numbers.
+ * @returns {string} Returns pixel value.
  */
 const toPixel = (value) => {
 
@@ -41,11 +39,11 @@ const toPixel = (value) => {
 };
 
 /**
- * スプライト画像のCSS更新処理
+ * Creates properties of sprites.
  *
- * @param {object} rule   更新後のCSSプロパティ一覧
- * @param {object} token  CSSトークン情報
- * @param {object} image  スプライト画像情報
+ * @param {object} rule   CSS rule
+ * @param {object} token  CSS token
+ * @param {object} image  Target image of sprites
  */
 const onUpdateRule = (rule, token, image) => {
 
@@ -62,7 +60,7 @@ const onUpdateRule = (rule, token, image) => {
     `${settings.clientRoot}/${settings.imagesDir}/${image.spriteUrl}`
   );
 
-  // プロパティ情報を作成する
+  // Creates css properties.
   const width              = postcss.decl({
     prop: 'width',
     value: imageWidth
@@ -84,7 +82,7 @@ const onUpdateRule = (rule, token, image) => {
     value: `${imageX} ${imageY}`
   });
 
-  // 作成したプロパティ情報でCSSプロパティ情報を更新する
+  // Append css properties of sprites.
   rule.insertAfter(token, width);
   rule.insertAfter(width, height);
   rule.insertAfter(height, backgroundImage);
@@ -96,7 +94,7 @@ const onUpdateRule = (rule, token, image) => {
 
 const imageDirPath = `${settings.clientRoot}/${settings.imagesDir}`;
 
-// ベースプラグイン設定情報
+// Base settings
 const BASE_PLUGINS = [
   easyImport({
     extensions: ['.sss'],
@@ -108,11 +106,8 @@ const BASE_PLUGINS = [
     ]
   }),
   mixins(),
-  precss(),
-  nestedProps(),
-  functions({
-    glob: path.resolve(__dirname, 'postcss/functions', '*.js')
-  }),
+  simpleVars(),
+  nested(),
   calc({
     mediaQueries: true,
   }),
@@ -161,11 +156,6 @@ const BASE_PLUGINS = [
   settings.isProduction && cssMqpacker(),
   settings.isProduction && csswring({
     removeAllComments: true
-  }),
-  settings.isStyleGuideEnabled && styleGuide({
-    project: 'Example StyleGuide',
-    dest: `${settings.documentRoot}/styleguide/index.html`,
-    showCode: false,
   }),
   reporter({
     clearReportedMessages: true,

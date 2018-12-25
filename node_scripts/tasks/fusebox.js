@@ -11,31 +11,12 @@ const settings  = require('../../config/settings');
 const fsbx      = require('fuse-box');
 
 /**
- * FuseBoxのビルド処理を行う。
- *
+ * FuseBox build process.
  */
 const buildProcess = () => {
 
-  const babelPlugin = fsbx.BabelPlugin({
-    config: {
-      sourceMaps: !settings.isProduction,
-      presets: [
-        [
-          'env',
-          {
-            targets: {
-              browsers: settings.browsers
-            }
-          }
-        ]
-      ],
-      plugins: [],
-    },
-  });
-
-  // FuseBoxの初期設定
   const fuse = fsbx.FuseBox.init({
-    useTypescriptCompiler: false,
+    useTypescriptCompiler: true,
     homeDir: `${settings.projectRoot}`,
     output: `${settings.documentRoot}/${settings.scriptsDir}/$name.js`,
     sourceMaps: !settings.isProduction,
@@ -45,10 +26,7 @@ const buildProcess = () => {
       fsbx.EnvPlugin({
         NODE_ENV: process.env.NODE_ENV
       }),
-      babelPlugin,
-      fsbx.VueComponentPlugin({
-        script: babelPlugin
-      }),
+      fsbx.VueComponentPlugin(),
       settings.isProduction && fsbx.UglifyJSPlugin(),
     ]
   });

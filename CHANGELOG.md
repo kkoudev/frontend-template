@@ -1,3 +1,21 @@
+# 0.9.0  (2018-12-25)
+
+### Added
+
+-   "postcss-simple-vars", "postcss-nested" in PostCSS plugins.
+
+### Changed
+
+-   FuseBox target transpiling script format from Babel to TypeScript.
+-   Node.js version `11.5.0`.
+
+### Removed
+
+-   "dns-prefetch" from Pug template.
+-   "precss", "postcss-functions", "postcss-nested-props" and "postcss-style-guide" from PostCSS plugins.
+-   "target-densitydpi", "minimum-scale", "maximum-scale" and "shrink-to-fit" from viewport in Pug template.
+-   Unnecessary dependencies and files.
+
 # 0.8.0  (2018-09-01)
 
 ### Added

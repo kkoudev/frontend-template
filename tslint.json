@@ -1,0 +1,35 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended",
+    "tslint-eslint-rules"
+  ],
+  "rulesDirectory": [],
+  "rules": {
+    "member-ordering": [
+      true,
+      {
+        "order": [
+          "static-field",
+          "instance-field",
+          "constructor",
+          "static-method",
+          "instance-method"
+        ]
+      }
+    ],
+    "ordered-imports": false,
+    "no-require-imports": false,
+    "object-literal-sort-keys": false,
+    "no-empty-interface": false,
+    "jsx-no-multiline-js": false,
+    "no-consecutive-blank-lines": [true, 2],
+    "whitespace": [true, "check-module"],
+    "ter-indent": [true, 2],
+    "quotemark": [true, "single", "avoid-escape"],
+    "no-console": true,
+    "no-unused-expression": [true, "allow-fast-null-checks"],
+    "max-classes-per-file": false
+  },
+  "jsRules": {}
+}

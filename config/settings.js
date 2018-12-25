@@ -1,5 +1,5 @@
 /**
- * @file Build and application settings.
+ * @file Build settings.
  *
  * @author Koichi Nagaoka
  */
@@ -12,7 +12,6 @@ const moment    = require('moment');
 // --------------------------------------------------
 
 const isProduction        = process.env.NODE_ENV === 'production';  // Production mode or not.
-const isStyleGuideEnabled = process.env.STYLE_GUIDE === 'true';     // Creates styleguide or not.
 const isCompressImage     = process.env.COMPRESS_IMAGE === 'true';  // Compress images or not.
 const projectRoot         = path.resolve(__dirname, '..');          // Project root directory path.
 const scriptsRoot         = `${projectRoot}/node_scripts`;          // Task script root directory path.
@@ -20,12 +19,13 @@ const documentDir         = isProduction ? 'build' : '.temp';       // Document 
 const documentRoot        = `${projectRoot}/${documentDir}`;        // Document root directory path.
 const bundlesDir          = 'bundles';                              // Bundle file directory name.
 const pagesDir            = 'pages';                                // Pages directory name.
-const clientRoot             = `${projectRoot}/client`;             // Directory path of client application.
-const serverRoot          = `${projectRoot}/server`;                // Directory path of server application.
+const sourceRoot          = `${projectRoot}/app`;                   // Directory path of application sources.
+const clientRoot          = `${sourceRoot}/client`;                 // Directory path of client application.
+const serverRoot          = `${sourceRoot}/server`;                 // Directory path of server application.
 const scriptsDir          = 'scripts';                              // Script directory name.
 const scriptsBundlesDir   = `${scriptsDir}/${pagesDir}`;            // Bundle target JavaScript directory relative path.
 const scriptsBundlesPath  = `${clientRoot}/${scriptsBundlesDir}`;   // Bundle target JavaScript directory full path.
-const scriptsExt          = 'js';                                   // Script file extension.
+const scriptsExt          = 'ts';                                   // Script file extension.
 const scriptsBundleName   = 'vendor';                               // Bundle file name of script libraries.
 const stylesDir           = 'styles';                               // CSS directory name.
 const stylesExt           = 'sss';                                  // CSS file extension.
@@ -62,10 +62,6 @@ const pugOptions          = {
     env: {
       isProduction,
       time: moment().format('YYYYMMDDhhmm'),
-      dnsPrefetches: [
-        isProduction ? 'example.com' : 'localhost', // TODO : プロジェクトによってここは修正すること
-        'fonts.googleapis.com'
-      ],
       preconnects: [
         isProduction ? 'https://example.com' : 'http://localhost',  // TODO : プロジェクトによってここは修正すること
         'https://fonts.googleapis.com'
@@ -125,7 +121,6 @@ const useBackendServer    = true;                         // Use backend server 
 
 module.exports = {
   isProduction,
-  isStyleGuideEnabled,
   isCompressImage,
   projectRoot,
   scriptsRoot,
@@ -133,6 +128,7 @@ module.exports = {
   documentRoot,
   bundlesDir,
   pagesDir,
+  sourceRoot,
   clientRoot,
   serverRoot,
   scriptsDir,
