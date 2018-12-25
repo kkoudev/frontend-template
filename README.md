@@ -50,7 +50,7 @@ app/client/styles
 ### `app/styles/parts` directory
 
 ```
-app/styles/parts
+app/client/styles/parts
 ├── atoms                 # 原子(Atoms)パーツに関するCSS格納ディレクトリ
 ├── molecules             # 分子(Molecules)パーツに関するCSS格納ディレクトリ
 ├── organisms             # 有機体(Organisms)パーツに関するCSS格納ディレクトリ
