@@ -1,3 +1,9 @@
+# 0.9.1  (2019-01-01)
+
+### Fixed
+
+-   Remove "whitespace" rule from tslint.json. Uses "tslint:recommended" rule.
+
 # 0.9.0  (2018-12-25)
 
 ### Added
