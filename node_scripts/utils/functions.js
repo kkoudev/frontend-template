@@ -77,10 +77,11 @@ exports.exec = (command, options, callback) => {
 /**
  * Watch target file or directory.
  *
- * @param {string}    target      target file or directory.
- * @param {function}  [callback]  callback function for updating file.
+ * @param {string}    target            target file or directory.
+ * @param {function}  [updateCallback]  callback function for updating file.
+ * @param {function}  [deleteCallback]  callback function for deleting file.
  */
-exports.watch = (target, callback) => {
+exports.watch = (target, updateCallback, deleteCallback) => {
 
   const watcher = chokidar.watch(
     target,
@@ -89,11 +90,22 @@ exports.watch = (target, callback) => {
     })
     .on('ready', () => {
 
-      watcher.on('change', (file) => {
+      watcher
+        .on('add', (file) => {
 
-        callback && callback(file);
+          updateCallback && updateCallback(file);
 
-      });
+        })
+        .on('change', (file) => {
+
+          updateCallback && updateCallback(file);
+
+        })
+        .on('unlink', (file) => {
+
+          deleteCallback && deleteCallback(file);
+
+        });
 
     });
 
