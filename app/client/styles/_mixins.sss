@@ -7,10 +7,17 @@
 // ==========================================================================//
 
 //-------------------------------
-// display smartphone
+// display pc
 //-------------------------------
-@define-mixin display_sp
-  @media only screen and (max-width: $breakpoint_sp)
+@define-mixin display_pc
+  @media only screen and (min-width: $breakpoint_tab)
+    @mixin-content
+
+//-------------------------------
+// display tablet
+//-------------------------------
+@define-mixin display_tab
+  @media only screen and (min-width: $breakpoint_sp)
     @mixin-content
 
 //-------------------------------
@@ -19,7 +26,7 @@
 // @param width display width
 //-------------------------------
 @define-mixin display_custom $width
-  @media only screen and (max-width: $width)
+  @media only screen and (min-width: $width)
     @mixin-content
 
 //-------------------------------
@@ -42,3 +49,16 @@
   overflow: hidden
   white-space: nowrap
   text-indent: 120%
+
+//-------------------------------
+// Image set for background-image
+//-------------------------------
+/* stylelint-disable */
+@define-mixin image-set-bg $path
+  background-image: image-set(
+    resolve(rpath($path, 1)) $display_ratio1_dpi
+    resolve(rpath($path, 2)) $display_ratio2_dpi
+    resolve(rpath($path, 3)) $display_ratio3_dpi
+  )
+  background-size: 100% auto
+/* stylelint-enable */

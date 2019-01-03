@@ -15,9 +15,11 @@ const mixins        = require('postcss-mixins');
 const calc          = require('postcss-calc');
 const hexrgba       = require('postcss-hexrgba');
 const webfont       = require('postcss-webfont');
+const imageSet      = require('postcss-image-set-polyfill');
 const reporter      = require('postcss-reporter');
 const assets        = require('postcss-assets');
 const sprites       = require('postcss-sprites');
+const functions     = require('postcss-functions');
 const autoprefixer  = require('autoprefixer');
 const csswring      = require('csswring');
 const cssMqpacker   = require('css-mqpacker');
@@ -108,19 +110,16 @@ const BASE_PLUGINS = [
   mixins(),
   simpleVars(),
   nested(),
-  calc({
-    mediaQueries: true,
-  }),
   hexrgba(),
   webfont({
     publishPath: settings.documentRoot,
     stylesheetPath: './styles',
     outputPath: `${settings.documentRoot}/fonts`,
   }),
-  sorting(),
-  autoprefixer({
-    browsers: settings.browsers
+  functions({
+    glob: path.resolve(__dirname, 'postcss/functions', '*.js'),
   }),
+  imageSet(),
   assets({
     loadPaths: [
       imageDirPath
@@ -153,6 +152,13 @@ const BASE_PLUGINS = [
       onUpdateRule,
     }
   }),
+  calc({
+    mediaQueries: true,
+  }),
+  autoprefixer({
+    browsers: settings.browsers
+  }),
+  sorting(),
   settings.isProduction && cssMqpacker(),
   settings.isProduction && csswring({
     removeAllComments: true

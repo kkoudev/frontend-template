@@ -1,3 +1,16 @@
+# 0.10.0  (2019-01-04)
+
+### Added
+
+-   "postcss-image-set-polyfill", "postcss-functions" in PostCSS plugins.
+-   "picturefill" module.
+-   "minimum-scale" in Pug template.
+-   "image-set" polyfill mixin.
+
+### Changed
+
+-   Upgrade versions of all dependences.
+
 # 0.9.1  (2019-01-01)
 
 ### Fixed
