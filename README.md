@@ -73,7 +73,11 @@ yarn start
 ## Build
 
 ```bash
-yarn dist
+# GTM development mode
+yarn dist:dev
+
+# GTM production mode
+yarn dist:prod
 ```
 
 ## Creates sprite image file
