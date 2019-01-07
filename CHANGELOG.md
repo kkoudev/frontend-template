@@ -1,3 +1,24 @@
+# 0.11.0  (2019-01-08)
+
+### Added
+
+-   LoadCSS supported.
+-   Critical-path CSS supported. (Only dist generating files)
+-   Lazy loading images supported.
+-   GTM Pug templates by environment.
+-   "vanilla-lazyload", "critical" and "fg-loadcss" module.
+-   "patch:critical", "patch" in npm scripts.
+
+### Changed
+
+-   The npm scripts changes "dist" to "dist:dev" and "dist:prod".
+-   TSLint rules.
+-   The "target" change "es2018" to "es5" in tsconfig.json
+
+### Removed
+
+-   "blazy" module.
+
 # 0.10.0  (2019-01-04)
 
 ### Added

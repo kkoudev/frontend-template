@@ -6,8 +6,29 @@
 //
 // ==========================================================================//
 
+//--------------------------------
+// 三次曲線定義
+//--------------------------------
+$cubic_ease_in: cubic-bezier(0.55, 0.055, 0.675, 0.19)
+$cubic_ease_out: cubic-bezier(0.215, 0.61, 0.355, 1)
+$cubic_ease_in_out: cubic-bezier(0.645, 0.045, 0.355, 1)
+$quad_ease_in_out: cubic-bezier(0.455, 0.03, 0.515, 0.955)
+
+
+//--------------------------------
+// トランジション定義
+//--------------------------------
+
 // テキストリンクのホバー
 $transition_text_link_hover: all 0.15s ease-out 0s
 
-// 開閉メニューの開閉スピード
-$transition_menu_click: all 0.6s ease-out 0s
+// アコーディオンの開閉
+$transition_accordion_close: all 0.33s $cubic_ease_out 0s
+$transition_accordion_open: all 0.33s $cubic_ease_in 0s
+
+// フェードイン/アウト
+$transition_fade_out: all 0.33s $cubic_ease_out 0s
+$transition_fade_in: all 0.33s $cubic_ease_in 0s
+
+// 文字フェード
+$transition_text_fade_in: all 0.7s $cubic_ease_in 0s

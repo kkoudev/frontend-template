@@ -22,8 +22,8 @@ body
   -webkit-overflow-scrolling: touch
   -webkit-font-smoothing: antialiased
   font-family: inherit
-  color: $color_text001
-  @mixin font_size $(font_body_size)
+  color: $color_text_default
+  font-size: $font_default_size
 
 @media print
   body
@@ -46,10 +46,10 @@ dl, dd, dt
 
 li
   list-style: none
-  @mixin font_size $(font_body_size)
+  font-size: $font_default_size
 
 dd, dt
-  @mixin font_size $(font_body_size)
+  font-size: $font_default_size
 
 small
   font-size: 100%
@@ -58,7 +58,7 @@ em
   font-style: normal
 
 a
-  color: $color_text001
+  color: $color_text_default
   text-decoration: none
   transition: $transition_text_link_hover
   outline: none

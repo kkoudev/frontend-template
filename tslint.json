@@ -27,7 +27,7 @@
     "ter-indent": [true, 2],
     "quotemark": [true, "single", "avoid-escape"],
     "no-console": true,
-    "no-unused-expression": [true, "allow-fast-null-checks"],
+    "no-unused-expression": [true, "allow-fast-null-checks", "allow-new"],
     "max-classes-per-file": false
   },
   "jsRules": {}

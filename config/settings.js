@@ -13,6 +13,7 @@ const moment    = require('moment');
 
 const isProduction        = process.env.NODE_ENV === 'production';  // Production mode or not.
 const isCompressImage     = process.env.COMPRESS_IMAGE === 'true';  // Compress images or not.
+const isGTMProduction     = process.env.GTM_ENV === 'production';   // GTM Production mode or not.
 const projectRoot         = path.resolve(__dirname, '..');          // Project root directory path.
 const scriptsRoot         = `${projectRoot}/node_scripts`;          // Task script root directory path.
 const documentDir         = isProduction ? 'build' : '.temp';       // Document directory name.
@@ -35,6 +36,8 @@ const imagesDir           = 'images';                               // Images di
 const spritesDir          = '_sprites';                             // Sprites of images directory name.
 const spritesPadding      = 10;                                     // Padding of sprite image.
 const materialsDir        = 'materials';                            // Materials directory name.
+const criticalWidth       = 1300;                                   // Critical area width
+const criticalHeight      = 900;                                    // Critical area height
 
 // Target image file extensions
 const imagesExts          = [
@@ -49,8 +52,8 @@ const imagesExts          = [
 const browsers            = [
   'last 3 versions',
   'IE >= 11',
-  'iOS >= 9',
-  'Android >= 4',
+  'iOS >= 10',
+  'Android >= 5',
 ];
 
 // Pug settings
@@ -61,6 +64,7 @@ const pugOptions          = {
 
     env: {
       isProduction,
+      isGTMProduction,
       time: moment().format('YYYYMMDDhhmm'),
       preconnects: [
         isProduction ? 'https://example.com' : 'http://localhost',  // TODO : プロジェクトによってここは修正すること
@@ -116,12 +120,13 @@ const compressImagesOptions = {
 const frontendServerPort  = 8000;                         // Port number of frontend server. (BrowserSync)
 const backendServerPort   = 9000;                         // Port number of backend server. (Express)
 const backendSocketPath   = '/sockets/node.sock';         // Socket file path of backend server.
-const useBackendServer    = true;                         // Use backend server or not.
+const useBackendServer    = false;                        // Use backend server or not.
 
 
 module.exports = {
   isProduction,
   isCompressImage,
+  isGTMProduction,
   projectRoot,
   scriptsRoot,
   documentDir,
@@ -144,6 +149,8 @@ module.exports = {
   spritesDir,
   spritesPadding,
   materialsDir,
+  criticalWidth,
+  criticalHeight,
   imagesExts,
   browsers,
   pugOptions,

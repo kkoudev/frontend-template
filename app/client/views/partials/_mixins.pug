@@ -1,0 +1,9 @@
+//-
+//- Lazy load image tag
+//-
+mixin lazyimg(src, srcset, alt)
+  img(
+    src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+    data-src=src
+    data-srcset=srcset
+    alt=alt).js-lazyload

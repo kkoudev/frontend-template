@@ -101,6 +101,9 @@ typings/
 # This project.
 # -----------------------
 
+# log directory
+/log
+
 # Development building output directory
 /.temp
 
