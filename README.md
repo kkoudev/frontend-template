@@ -29,6 +29,7 @@ This template is frontend project template.
 
 ```
 app/client
+├── iconfonts             # アイコンフォント用SVGファイル格納ディレクトリ
 ├── images                # 画像格納ディレクトリ
 ├── materials             # その他ファイル格納ディレクトリ
 ├── scripts               # JavsScriptファイル(*.js)格納ディレクトリ
@@ -44,6 +45,7 @@ app/client/styles
 ├── parts                 # パーツ関連のCSS格納ディレクトリ
 ├── vars                  # 変数を定義したCSS格納ディレクトリ
 ├── _default.sss          # 要素型セレクタのデフォルトスタイルを定義したファイル
+├── _iconfonts.sss        # アイコンフォントの@font-faceを定義したファイル
 └── _mixins.sss           # 全体的によく利用する mixin を定義したファイル
 ```
 
@@ -128,13 +130,7 @@ iconfont-(@font-faceで指定されたfont-family名)-(拡張子を除いたSVG�
   src: url('../../iconfonts/*.svg')
   font-weight: normal
   font-style: normal
-
-[class^='iconfont-example-'], [class*=' iconfont-example-']
-  font-family: inherit
-
-[class^='iconfont-example-']::before, [class*=' iconfont-example-']::before
-  font-family: 'example'
-  vertical-align: middle
+  font-display: swap
 ```
 
 ＜SugarSSコンパイル後＞
@@ -145,34 +141,47 @@ iconfont-(@font-faceで指定されたfont-family名)-(拡張子を除いたSVG�
   src: url('../fonts/example.eot?15f306853f8#iefix') format('embedded-opentype'), url('../fonts/example.woff?15f306853f8') format('woff'), url('../fonts/example.ttf?15f306853f8') format('truetype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
-[class^='iconfont-example-'], [class*=' iconfont-example-'] {
-  font-family: 'example';
+[class^='iconfont-example-']::before, [class*=' iconfont-example-']::before,
+[class^='iconfont-before-example-']::before, [class*=' iconfont-before-example-']::before,
+[class^='iconfont-after-example-']::after, [class*=' iconfont-after-example-']::after {
+  font-family: 'example', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
   line-height: 1;
+  vertical-align: middle;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 .iconfont-example-add::before {
   content: '\EA01';
 }
+.iconfont-before-example-add::before {
+  content: '\EA01';
+}
+.iconfont-after-example-add::after {
+  content: '\EA01';
+}
 .iconfont-example-anchor_link::before {
+  content: '\EA02';
+}
+.iconfont-before-example-anchor_link::before {
+  content: '\EA02';
+}
+.iconfont-after-example-anchor_link::after {
   content: '\EA02';
 }
 .iconfont-example-apartment::before {
   content: '\EA03';
 }
-
-[class^='iconfont-example-'], [class*=' iconfont-example-'] {
-  font-family: inherit;
+.iconfont-before-example-apartment::before {
+  content: '\EA03';
 }
-
-[class^='iconfont-example-']::before, [class*=' iconfont-example-']::before {
-  font-family: 'example';
-  vertical-align: middle;
+.iconfont-after-example-apartment::after {
+  content: '\EA03';
 }
 ```
 

@@ -1,4 +1,14 @@
-# 0.11.0  (2019-01-08)
+# 0.12.0  (2019-01-07)
+
+### Added
+
+-   Icon fonts template.
+
+### Changed
+
+-   Upgrade versions of all dependences.
+
+# 0.11.0  (2019-01-07)
 
 ### Added
 
