@@ -55,6 +55,7 @@
     "@types/node": "^10.12.18",
     "@types/picturefill": "^3.0.0",
     "@types/webfontloader": "^1.6.29",
+    "autoprefixer": "^9.4.5",
     "babel-eslint": "^10.0.1",
     "browser-sync": "^2.26.3",
     "chalk": "^2.4.2",

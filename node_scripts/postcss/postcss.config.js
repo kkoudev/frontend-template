@@ -20,6 +20,7 @@ const reporter      = require('postcss-reporter');
 const assets        = require('postcss-assets');
 const sprites       = require('postcss-sprites');
 const functions     = require('postcss-functions');
+const autoprefixer  = require('autoprefixer');
 const cssnano       = require('cssnano');
 const cssMqpacker   = require('css-mqpacker');
 const sugarss       = require('sugarss');
@@ -155,6 +156,9 @@ const BASE_PLUGINS = [
     mediaQueries: true,
   }),
   sorting(),
+  autoprefixer({
+    grid: true,
+  }),
   settings.isProduction && cssMqpacker(),
   settings.isProduction && cssnano({
     configFile: path.resolve(__dirname, 'cssnano.config.js'),

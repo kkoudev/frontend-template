@@ -1,4 +1,4 @@
-# 0.14.0  (2019-01-13)
+# 0.14.0  (2019-01-14)
 
 ### Added
 
@@ -6,11 +6,11 @@
 
 ### Changed
 
--   Execute "autoprefixer" in "cssnano" plugin.
+-   Set grid option of "autoprefixer".
 
 ### Removed
 
--   "autoprefixer" and "csswring" module.
+-   "csswring" module.
 
 # 0.13.0  (2019-01-13)
 
