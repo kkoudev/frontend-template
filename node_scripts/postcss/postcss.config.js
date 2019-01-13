@@ -20,12 +20,11 @@ const reporter      = require('postcss-reporter');
 const assets        = require('postcss-assets');
 const sprites       = require('postcss-sprites');
 const functions     = require('postcss-functions');
-const autoprefixer  = require('autoprefixer');
-const csswring      = require('csswring');
+const cssnano       = require('cssnano');
 const cssMqpacker   = require('css-mqpacker');
 const sugarss       = require('sugarss');
 const stylelint     = require('stylelint');
-const settings      = require('../config/settings');
+const settings      = require('../../config/settings');
 
 
 /**
@@ -117,7 +116,7 @@ const BASE_PLUGINS = [
     outputPath: `${settings.documentRoot}/fonts`,
   }),
   functions({
-    glob: path.resolve(__dirname, 'postcss/functions', '*.js'),
+    glob: path.resolve(__dirname, 'functions', '*.js'),
   }),
   imageSet(),
   assets({
@@ -155,13 +154,10 @@ const BASE_PLUGINS = [
   calc({
     mediaQueries: true,
   }),
-  autoprefixer({
-    browsers: settings.browsers
-  }),
   sorting(),
   settings.isProduction && cssMqpacker(),
-  settings.isProduction && csswring({
-    removeAllComments: true
+  settings.isProduction && cssnano({
+    configFile: path.resolve(__dirname, 'cssnano.config.js'),
   }),
   reporter({
     clearReportedMessages: true,

@@ -1,3 +1,17 @@
+# 0.14.0  (2019-01-13)
+
+### Added
+
+-   "cssnano" module.
+
+### Changed
+
+-   Execute "autoprefixer" in "cssnano" plugin.
+
+### Removed
+
+-   "autoprefixer" and "csswring" module.
+
 # 0.13.0  (2019-01-13)
 
 ### Changed

@@ -8,7 +8,7 @@ const funcs         = require('../utils/functions');
 const settings      = require('../../config/settings');
 const fs            = require('fs-extra');
 const postcss       = require('postcss');
-const postcssConfig = require('../postcss.config');
+const postcssConfig = require('../postcss/postcss.config');
 
 
 // Watch building
