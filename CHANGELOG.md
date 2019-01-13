@@ -1,3 +1,10 @@
+# 0.13.0  (2019-01-13)
+
+### Changed
+
+-   TSLint rules.
+-   Upgrade versions of all dependences.
+
 # 0.12.0  (2019-01-07)
 
 ### Added

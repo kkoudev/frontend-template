@@ -28,7 +28,20 @@
     "quotemark": [true, "single", "avoid-escape"],
     "no-console": true,
     "no-unused-expression": [true, "allow-fast-null-checks", "allow-new"],
-    "max-classes-per-file": false
+    "max-classes-per-file": false,
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-module",
+      "check-separator",
+      "check-rest-spread",
+      "check-type",
+      "check-typecast",
+      "check-type-operator",
+      "check-preblock"
+    ]
   },
   "jsRules": {}
 }
