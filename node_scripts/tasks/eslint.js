@@ -1,5 +1,5 @@
 /**
- * @file Build settings of TSLint.
+ * @file Build settings of ESLint.
  *
  * @author Koichi Nagaoka
  */
@@ -10,10 +10,11 @@ const settings  = require('../../config/settings');
 
 // Watch building
 funcs.watchBuilding(
-  settings.sourceRoot,
+  settings.clientRoot,
   [
-    'tslint -s node_modules/custom-tslint-formatters/formatters -t grouped --fix',
-    `"${settings.sourceRoot}/**/*.${settings.scriptsExt}"`
+    'eslint',
+    '--fix --cache',
+    `"${settings.clientRoot}/**/*.${settings.scriptsExt}"`
   ].join(' '),
   {
     noError: true

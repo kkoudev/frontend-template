@@ -5,7 +5,7 @@
 /**
  * Window definition of variables and functions.
  */
-// tslint:disable-next-line
+// eslint-disable-next-line
 interface Window {
 
   /**

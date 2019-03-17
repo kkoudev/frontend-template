@@ -4,6 +4,7 @@
  * @author Koichi Nagaoka
  */
 
+const os            = require('os');
 const path          = require('path');
 const glob          = require('glob');
 const chokidar      = require('chokidar');
@@ -37,7 +38,7 @@ const errorNotifyOptions = {
  *
  * @param {string} error error message.
  */
-const logError = (error) => {
+exports.logError = (error) => {
 
   // notify specified error.
   notifier.notify(errorNotifyOptions);
@@ -77,11 +78,10 @@ exports.exec = (command, options, callback) => {
 /**
  * Watch target file or directory.
  *
- * @param {string}    target            target file or directory.
- * @param {function}  [updateCallback]  callback function for updating file.
- * @param {function}  [deleteCallback]  callback function for deleting file.
+ * @param {string}    target      target file or directory.
+ * @param {function}  [callback]  callback function for updating file.
  */
-exports.watch = (target, updateCallback, deleteCallback) => {
+exports.watch = (target, callback) => {
 
   const watcher = chokidar.watch(
     target,
@@ -90,22 +90,11 @@ exports.watch = (target, updateCallback, deleteCallback) => {
     })
     .on('ready', () => {
 
-      watcher
-        .on('add', (file) => {
+      watcher.on('change', (file) => {
 
-          updateCallback && updateCallback(file);
+        callback && callback(file);
 
-        })
-        .on('change', (file) => {
-
-          updateCallback && updateCallback(file);
-
-        })
-        .on('unlink', (file) => {
-
-          deleteCallback && deleteCallback(file);
-
-        });
+      });
 
     });
 
@@ -218,6 +207,94 @@ exports.watchBuilding = (watchTarget, buildCommand, options) => {
 
 
 /**
+ * Executes building and watching for target files.
+ *
+ * Executes building and watching if set environment variable of "NODE_WATCH" is true.
+ * Otherwise build only.
+ *
+ * @param {string}      watchTarget   target file or directory.
+ * @param {string}      srcDirPath    target source directory path.
+ * @param {string}      pattern       target file pattern.
+ * @param {object}      globoptions   target file glob options.
+ * @param {function}    buildCommand  build processing function.
+ * @param {function}    completion    build processing completion function.
+ */
+exports.watchBuildingGlobs = (watchTarget, srcDirPath, pattern, globoptions, buildCommand, completion) => {
+
+  /**
+   * Copy materials files.
+   *
+   * @param {string} file add or change file path
+   */
+  const buildProcessing = (file) => {
+
+    // target files
+    const targetFiles = glob.sync(`${srcDirPath}/${pattern}`, globoptions || {});
+
+    return new Promise((resolve, reject) => {
+
+      const executeCompilePromises = [];
+
+      // empty files?
+      if (targetFiles.length === 0) {
+
+        // call completion processing
+        completion && completion();
+
+        // returns successful
+        resolve();
+        return;
+
+      }
+
+      // for each target files
+      targetFiles.forEach((targetFile) => {
+
+        // creates promise for compiling pug file
+        executeCompilePromises.push(new Promise((compileResolve, compileReject) => {
+
+          const workFilePath    = `${targetFile.substring(srcDirPath.length + 1)}`;
+          const targetFileExt   = path.extname(workFilePath);
+          const targetFilePath  = path.basename(workFilePath, targetFileExt);
+
+          // Execute buiding command
+          buildCommand(
+            targetFile,
+            targetFilePath,
+            targetFileExt,
+            compileResolve,
+            compileReject
+          );
+
+        }));
+
+      });
+
+      // Execute all compiling pug files
+      Promise.all(executeCompilePromises)
+        .then((results) => {
+
+          // call completion processing
+          completion && completion(results);
+          resolve();
+
+        })
+        .catch((error) => reject(error));
+
+    });
+
+  };
+
+  // Watch building
+  exports.watchBuilding(
+    watchTarget,
+    buildProcessing
+  );
+
+};
+
+
+/**
  * Executes differential building and watching.
  *
  * Executes building and watching if set environment variable of "NODE_WATCH" is true.
@@ -229,8 +306,9 @@ exports.watchBuilding = (watchTarget, buildCommand, options) => {
  * @param {string}      pattern       target file pattern.
  * @param {object}      globoptions   target file glob options.
  * @param {function}    buildCommand  build processing function.
+ * @param {function}    completion    build processing completion function.
  */
-exports.watchBuildingDiff = (watchTarget, srcDirPath, destDirPath, pattern, globoptions, buildCommand) => {
+exports.watchBuildingDiff = (watchTarget, srcDirPath, destDirPath, pattern, globoptions, buildCommand, completion) => {
 
   /**
    * Copy materials files.
@@ -249,6 +327,8 @@ exports.watchBuildingDiff = (watchTarget, srcDirPath, destDirPath, pattern, glob
 
       // empty files?
       if (targetFiles.length === 0) {
+
+        completion && completion();
 
         // returns successful
         resolve();
@@ -283,18 +363,55 @@ exports.watchBuildingDiff = (watchTarget, srcDirPath, destDirPath, pattern, glob
 
       // Execute all compiling pug files
       Promise.all(executeCompilePromises)
-        .then(() => resolve())
+        .then((results) => {
+          completion && completion(results);
+          resolve();
+        })
         .catch((error) => reject(error));
 
     });
 
   };
 
-
   // Watch building
   exports.watchBuilding(
     watchTarget,
     buildProcessing
   );
+
+};
+
+
+/**
+ * Get local machine ip addresses.
+ *
+ * @returns {string[]} local machine ip addresses.
+ */
+exports.getIPAddresses = () => {
+
+  const ipAddresses = [];
+  const interfaces = os.networkInterfaces();
+
+  // each by interface
+  Object.keys(interfaces).forEach((devName) => {
+
+    const iface = interfaces[devName];
+
+    // each by interface addresse
+    iface.forEach((alias) => {
+
+      // target address?
+      if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
+
+        // append ip address
+        ipAddresses.push(alias.address);
+
+      }
+
+    });
+
+  });
+
+  return ipAddresses;
 
 };

@@ -1,0 +1,92 @@
+---
+extends:
+  - "eslint:recommended"
+  - "plugin:node/recommended"
+  - "plugin:@typescript-eslint/recommended"
+
+plugins:
+  - "@typescript-eslint"
+
+parser: "@typescript-eslint/parser"
+parserOptions:
+  sourceType: "module"
+  project: "./tsconfig.json"
+  ecmaFeatures:
+    jsx: true
+
+globals:
+  dataLayer: true
+  window: true
+  document: true
+
+rules:
+  "no-console": "off"
+  "no-dupe-class-members": "off"
+  "no-unmodified-loop-condition": "off"
+  "no-undefined": "off"
+  "node/no-unsupported-features/es-syntax": "off"
+  "node/no-missing-require": "off"
+  "node/no-missing-import": "off"
+  "node/no-unpublished-require": "off"
+  "node/no-extraneous-require": "off"
+  "@typescript-eslint/indent": [2, 2, {
+    "SwitchCase": 0
+  }]
+  "@typescript-eslint/interface-name-prefix": ["error", "always"]
+  "@typescript-eslint/no-explicit-any": "off"
+  "@typescript-eslint/camelcase": "off"
+  "@typescript-eslint/no-empty-interface": "off"
+  "@typescript-eslint/no-unused-vars": ["error", {
+    "vars": "all",
+    "args": "none",
+    "ignoreRestSiblings": false
+  }]
+  "@typescript-eslint/explicit-function-return-type": "warn"
+  "@typescript-eslint/no-object-literal-type-assertion": "off"
+  "@typescript-eslint/no-var-requires": "off"
+
+  # Stylistic Issues
+  "array-bracket-spacing": ["error", "never"]
+  "block-spacing": ["error", "always"]
+  "brace-style": ["error", "1tbs", {
+    "allowSingleLine": true
+  }]
+  "comma-spacing": "error"
+  "comma-style": ["error", "last"]
+  "computed-property-spacing": "error"
+  "consistent-this": ["error", "self"]
+  "eol-last": "error"
+  "func-style": ["error", "expression"]
+  "jsx-quotes": ["error", "prefer-single"]
+  "keyword-spacing": ["error", {after: true}]
+  "linebreak-style": ["error", "unix"]
+  "max-nested-callbacks": ["error", 3]
+  "new-parens": "error"
+  "no-array-constructor": "error"
+  "no-lonely-if": "error"
+  "no-mixed-spaces-and-tabs": "error"
+  "no-multiple-empty-lines": "error"
+  "no-nested-ternary": "error"
+  "no-negated-condition": "error"
+  "no-new-object": "error"
+  "no-restricted-syntax": ["error", "WithStatement"]
+  "no-spaced-func": "error"
+  "no-trailing-spaces": "error"
+  "no-unneeded-ternary": "error"
+  "object-curly-spacing": ["error", "always"]
+  "operator-assignment": ["error", "always"]
+  "quote-props": ["error", "as-needed"]
+  "quotes": ["error", "single"]
+  "semi-spacing": "error"
+  "semi": ["error", "always"]
+  "space-before-blocks": ["error", "always"]
+  "space-before-function-paren": ["off", {
+    "anonymous": "always",
+    "named": "always",
+    "asyncArrow": "ignore"
+  }]
+  "space-in-parens": ["error", "never"]
+  "space-infix-ops": "error"
+  "space-unary-ops": "error"
+  "spaced-comment": ["error", "always"]
+  "valid-jsdoc": "off"

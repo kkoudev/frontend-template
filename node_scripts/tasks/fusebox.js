@@ -42,7 +42,7 @@ const buildProcess = () => {
 
     // バンドルファイルパス一覧へ追加する
     bundles.push({
-      name: `${path.dirname(bundlePath)}/${path.basename(bundlePath, `.${settings.scriptsExt}`)}`,
+      name: `${path.dirname(bundlePath)}/${path.basename(bundlePath, path.extname(bundlePath))}`,
       projectPath
     });
 

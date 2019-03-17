@@ -103,7 +103,7 @@ const BASE_PLUGINS = [
     plugins: [
       stylelint({
         configBasedir: settings.projectRoot,
-        configFile: '.stylelintrc.yml'
+        configFile: '.stylelintrc.yaml'
       })
     ]
   }),

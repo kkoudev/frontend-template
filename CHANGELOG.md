@@ -1,3 +1,15 @@
+# 0.15.0  (2019-03-17)
+
+### Added
+
+-   "sitemap" and "robots-generator" modules.
+
+### Changed
+
+-   TSLint has been removed and replaced with ESLint.
+-   Upgrade versions of all dependences.
+-   Node.js version `11.12.0`.
+
 # 0.14.0  (2019-01-14)
 
 ### Added
