@@ -36,6 +36,8 @@ const imagesDir           = 'images';                               // Images di
 const spritesDir          = '_sprites';                             // Sprites of images directory name.
 const spritesPadding      = 10;                                     // Padding of sprite image.
 const materialsDir        = 'materials';                            // Materials directory name.
+const eslintCache         = '.eslintcache';                         // ESLint cache file name.
+const eslintCachePath     = `${projectRoot}/${eslintCache}`;        // ESLint cache file path.
 const criticalWidth       = 1300;                                   // Critical area width
 const criticalHeight      = 900;                                    // Critical area height
 
@@ -149,6 +151,8 @@ module.exports = {
   spritesDir,
   spritesPadding,
   materialsDir,
+  eslintCache,
+  eslintCachePath,
   criticalWidth,
   criticalHeight,
   imagesExts,

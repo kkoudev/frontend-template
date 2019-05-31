@@ -29,6 +29,7 @@ rules:
   "node/no-missing-import": "off"
   "node/no-unpublished-require": "off"
   "node/no-extraneous-require": "off"
+  "react/display-name": "off"
   "@typescript-eslint/indent": [2, 2, {
     "SwitchCase": 0
   }]
@@ -62,6 +63,7 @@ rules:
   "linebreak-style": ["error", "unix"]
   "max-nested-callbacks": ["error", 3]
   "new-parens": "error"
+  "arrow-parens": ["error", "always"]
   "no-array-constructor": "error"
   "no-lonely-if": "error"
   "no-mixed-spaces-and-tabs": "error"
@@ -73,6 +75,7 @@ rules:
   "no-spaced-func": "error"
   "no-trailing-spaces": "error"
   "no-unneeded-ternary": "error"
+  "no-async-promise-executor": "error"
   "object-curly-spacing": ["error", "always"]
   "operator-assignment": ["error", "always"]
   "quote-props": ["error", "as-needed"]
