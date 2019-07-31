@@ -157,7 +157,7 @@ const BASE_PLUGINS = [
   }),
   sorting(),
   autoprefixer({
-    browsers: settings.browsers,
+    overrideBrowserslist: settings.browsers,
     grid: true,
   }),
   settings.isProduction && cssMqpacker(),

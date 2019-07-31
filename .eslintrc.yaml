@@ -20,6 +20,7 @@ globals:
   document: true
 
 rules:
+  "eqeqeq": "error"
   "no-console": "off"
   "no-dupe-class-members": "off"
   "no-unmodified-loop-condition": "off"

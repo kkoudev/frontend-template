@@ -1,3 +1,11 @@
+# 0.17.0  (2019-07-31)
+
+### Changed
+
+-   ESLint rules.
+-   Upgrade versions of all dependences.
+-   Node.js version `12.7.0`.
+
 # 0.16.0  (2019-05-31)
 
 ### Changed
