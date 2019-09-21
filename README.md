@@ -31,7 +31,7 @@ This template is frontend project template.
 app/client
 ├── iconfonts             # アイコンフォント用SVGファイル格納ディレクトリ
 ├── images                # 画像格納ディレクトリ
-├── materials             # その他ファイル格納ディレクトリ
+├── htdocs                # ドキュメントルートファイル格納ディレクトリ
 ├── scripts               # JavsScriptファイル(*.js)格納ディレクトリ
 ├── styles                # SugarSSファイル(*.sss)格納ディレクトリ
 └── views                 # Pugファイル(*.pug)格納ディレクトリ
