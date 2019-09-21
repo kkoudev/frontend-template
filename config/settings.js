@@ -35,7 +35,7 @@ const viewsRootDir        = `${viewsDir}/root`;                     // View root
 const imagesDir           = 'images';                               // Images directory name.
 const spritesDir          = '_sprites';                             // Sprites of images directory name.
 const spritesPadding      = 10;                                     // Padding of sprite image.
-const materialsDir        = 'materials';                            // Materials directory name.
+const htdocsDir           = 'htdocs';                               // Htdocs directory name.
 const eslintCache         = '.eslintcache';                         // ESLint cache file name.
 const eslintCachePath     = `${projectRoot}/${eslintCache}`;        // ESLint cache file path.
 const criticalWidth       = 1300;                                   // Critical area width
@@ -150,7 +150,7 @@ module.exports = {
   imagesDir,
   spritesDir,
   spritesPadding,
-  materialsDir,
+  htdocsDir,
   eslintCache,
   eslintCachePath,
   criticalWidth,

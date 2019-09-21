@@ -1,3 +1,18 @@
+# 0.18.0  (2019-09-21)
+
+### Added
+
+-   "htdocs" task. This task copies files to document root.
+
+### Changed
+
+-   Upgrade versions of all dependences.
+-   Node.js version `12.10.0`.
+
+### Removed
+
+-   "material" task. Use the "htdocs" task instead.
+
 # 0.17.0  (2019-07-31)
 
 ### Changed
