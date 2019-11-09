@@ -15,4 +15,4 @@ interface Window {
 
 }
 
-declare var window: Window;
+declare let window: Window;

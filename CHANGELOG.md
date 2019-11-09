@@ -1,3 +1,14 @@
+# 0.19.0  (2019-11-09)
+
+### Fixed
+
+-   Cannot "htdocs" task.
+
+### Changed
+
+-   Upgrade versions of all dependences.
+-   Node.js version `13.1.0`.
+
 # 0.18.0  (2019-09-21)
 
 ### Added
